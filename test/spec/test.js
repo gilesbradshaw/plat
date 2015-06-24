@@ -11,11 +11,12 @@
 
     describe('platinum component viewmodel testing', function() {
         // Load modules with requirejs before tests
-        var viewModel, params;
+        var viewModel, params, getProductSpy;
         beforeEach(function(done) {
             requirejs(['components/product/viewModel'], function(ViewModel) {
+                getProductSpy = sinon.spy();
                 params = {
-                    getProduct: sinon.spy()
+                    getProduct: sinon.stub().returns(getProductSpy)
                 };
                 viewModel = new ViewModel(params);
                 done(); // We can launch the tests!
@@ -28,6 +29,7 @@
                 viewModel.product(product);
                 assert(params.getProduct.calledOnce);
                 assert(params.getProduct.args[0][0] === product);
+                assert(getProductSpy.calledOnce);
             });
         });
     });
@@ -56,7 +58,7 @@
             it('should get product', function(){
                 var product = {name: 'prod'};
                 var model = new Model(43);
-                model.getProduct(product);
+                model.getProduct(product)();
                 mockHttp.product(product, server);
                 assert(server.requests[server.requests.length - 1].requestBody === JSON.stringify(product));
                 assert(model.product()[0].name === 'V1_prod');

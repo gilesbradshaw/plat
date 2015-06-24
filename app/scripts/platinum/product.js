@@ -24,16 +24,18 @@ define(['jquery', 'knockout', 'mockHttp'], function($, ko, mockHttp){
     };
     viewModel.prototype.getProduct = function(product){
         var self = this;
-        $.ajax({
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(product),
-            url: '/product',
-            success: function (data) {
-                self.product(data);
-            }
-        });
-        mockHttp.product(product);
+        return function(){
+            $.ajax({
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(product),
+                url: '/product',
+                success: function (data) {
+                    self.product(data);
+                }
+            });
+            mockHttp.product(product);
+        };
     };
     return viewModel;
 });

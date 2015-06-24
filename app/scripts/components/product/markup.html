@@ -1,12 +1,12 @@
 <div>{{params.type}}</div>
 
 <select value={{product}} options={{params.products}}  data-bind='optionsText:"name"'>
-    
 </select>
-
+<span click={{params.getProducts}}>refresh</span>
 {{#with:product}}
     <div>
         {{name}}
+        <span click={{$parent.params.getProduct($data)}}>refresh</span>
     </div>
 {{/with}}
 <ul>

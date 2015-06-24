@@ -7,7 +7,7 @@ define(['knockout'], function(ko){
         this.params = params;
         this.product = ko.observable();
         this.product.subscribe(function(product){
-            params.getProduct(product);
+            params.getProduct(product)();
         });
    };
 });
