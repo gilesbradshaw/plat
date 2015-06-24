@@ -4,7 +4,7 @@ requirejs.config({
     baseUrl: 'scripts',
     paths: {
         jquery: '/bower_components/jquery/dist/jquery.min',
-        knockout: '/bower_components/knockout/dist/knockout',
+        knockout: '/bower_components/knockout/dist/knockout.debug',
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
          mockHttp: '/test/spec/mockHttp/platinum'
 
@@ -13,14 +13,21 @@ requirejs.config({
 
 
 
-define(['jquery', 'knockout', 'platinum/model', 'mockHttp', 'knockout.punches'], function($, ko, platinumModel, mockHttp){
+define(
+    [
+        'jquery',
+        'knockout',
+        'platinum/product',
+        'platinum/headings',
+        'mockHttp',
+        'knockout.punches'
+    ], function($, ko, PlatinumProduct, PlatinumHeadings, mockHttp){
 
-    ko.components.register('platinum', {
-        viewModel: { require: 'components/viewModel' },
-        template: { require: 'text!components/platinum.html' }
+    ko.components.register('platinum-product', {
+        viewModel: { require: 'components/product/viewModel' },
+        template: { require: 'text!components/product/markup.html' }
     });
     ko.punches.enableAll();
-    ko.applyBindings(platinumModel);
     var server = sinon.fakeServer.create();
     server.xhr.useFilters = true;
 
@@ -28,8 +35,16 @@ define(['jquery', 'knockout', 'platinum/model', 'mockHttp', 'knockout.punches'],
         //return false;
         return url.match(/scripts/) !== null;
     });
-    platinumModel.get(42);
-    mockHttp(server);
+    mockHttp.server = server;
+    var viewModel = {
+         headings: new PlatinumHeadings(),
+         platinumProducts: [
+            new PlatinumProduct('PCP'),
+            new PlatinumProduct('PCH'),
+            new PlatinumProduct('HP')
+        ]
+    };
+    ko.applyBindings(viewModel);
 
 });
 

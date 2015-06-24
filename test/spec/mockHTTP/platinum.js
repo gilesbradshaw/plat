@@ -1,27 +1,88 @@
 'use strict';
 
 define([], function(){
-    return function(server){
-        var respondData = [
+    var mockHttp = {
+        headings: function(server){
+            server = mockHttp.server || server;
+            if(server)
             {
-                name: 'hey1',
-                id: 1
-            },
-            {
-                name: 'hey',
-                id: 2
+                var respondData = [
+                    {
+                        name: 'Heading1',
+                        id: 1
+                    },
+                    {
+                        name: 'Heading2',
+                        id: 2
+                    }
+                ];
+                server.respondWith(
+                    'POST',
+                    '/headings',
+                    [
+                        200,
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                        JSON.stringify(respondData)
+                    ]);
+                server.respond();
             }
-        ];
-        server.respondWith(
-            'POST',
-            '/todo/42/items',
-            [
-                200,
-                {
-                    'Content-Type': 'application/json'
-                },
-                JSON.stringify(respondData)
-            ]);
-        server.respond();
+        },
+        products: function(name, server){
+            server = mockHttp.server || server;
+            if(server)
+            {
+                var respondData = [
+                    {
+                        name: 'P1_' + name,
+                        id: 1
+                    },
+                    {
+                        name: 'P2_' + name,
+                        id: 2
+                    }
+                ];
+                server.respondWith(
+                    'POST',
+                    '/products/' + name,
+                    [
+                        200,
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                        JSON.stringify(respondData)
+                    ]);
+                server.respond();
+            }
+        },
+        product: function(product, server){
+            server = mockHttp.server || server;
+            if(server)
+            {
+                var respondData = [
+                    {
+                        name: 'V1_' + product.name,
+                        id: 1
+                    },
+                    {
+                        name: 'V2_' + product.name,
+                        id: 2
+                    }
+                ];
+                server.respondWith(
+                    'POST',
+                    '/product',
+                    [
+                        200,
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                        JSON.stringify(respondData)
+                    ]);
+                server.respond();
+            }
+        }
     };
+    return mockHttp;
 });

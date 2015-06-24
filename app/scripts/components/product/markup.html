@@ -1,0 +1,19 @@
+<div>{{params.name}}</div>
+
+<select value={{product}} options={{params.products}}  data-bind='optionsText:"name"'>
+    
+</select>
+
+{{#with:product}}
+    <div>
+        {{name}}
+    </div>
+{{/with}}
+<ul>
+    {{#foreach:params.product}}
+        <li>
+            {{name}}
+        </li>
+    {{/foreach}}
+</ul>
+
