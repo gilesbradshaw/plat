@@ -1,4 +1,5 @@
 'use strict';
+//headings view model - fetches headings for products - what each row represents.
 
 define(['jquery', 'knockout', 'mockHttp'], function($, ko, mockHttp){
     var viewModel = function(){

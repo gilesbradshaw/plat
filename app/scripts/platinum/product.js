@@ -1,24 +1,26 @@
 'use strict';
 
+//products cieww model fetches a list of produ7cts
+
 define(['jquery', 'knockout', 'mockHttp'], function($, ko, mockHttp){
-    var viewModel = function(name){
-        this.name = name;
+    var viewModel = function(type){
+        this.type = type;
         this.products = ko.observableArray();
         this.product = ko.observableArray();
-        this.getProducts(name);
+        this.getProducts();
     };
-    viewModel.prototype.getProducts = function(spec){
+    viewModel.prototype.getProducts = function(){
         var self = this;
         $.ajax({
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(spec),
-            url: '/products/' + spec,
+            data: JSON.stringify(self.type),
+            url: '/products/' + self.type,
             success: function (data) {
                 self.products(data);
             }
         });
-        mockHttp.products(spec);
+        mockHttp.products(self.type);
     };
     viewModel.prototype.getProduct = function(product){
         var self = this;
