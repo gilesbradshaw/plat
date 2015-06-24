@@ -1,5 +1,7 @@
 'use strict';
 
+//mocks http requests.
+
 define([], function(){
     var mockHttp = {
         headings: function(server){
