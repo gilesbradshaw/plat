@@ -1,0 +1,11 @@
+{
+    "globals": {
+        "define": false,
+        "requirejs": false,
+        "describe": false,
+        "it": false,
+        "before": false,
+        "sinon": false,
+        "assert": false
+    }
+}
