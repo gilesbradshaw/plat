@@ -26,22 +26,23 @@
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <ul>
-      {{#foreach:headings.headings}}
-        <li>
-          {{name}}
-        </li>
-      {{/foreach}}  
-    </u1>
+    <div style='display:none' data-bind='attr:{style:"display:block"}'>
+      <ul>
+        {{#foreach:headings.headings}}
+          <li>
+            {{name}}
+          </li>
+        {{/foreach}}  
+      </u1>
 
-    <ul>
-      {{#foreach:platinumProducts}}
-        <li>
-          {{#component:{name:'platinum-product', params:$data}/}}
-        </li>
-      {{/foreach}}
-    </u1>
-
+      <ul>
+        {{#foreach:platinumProducts}}
+          <li>
+            {{#component:{name:'platinum-product', params:$data}/}}
+          </li>
+        {{/foreach}}
+      </u1>
+    </div>
     <script src="/node_modules/sinon/pkg/sinon-1.15.0.js"></script>
       <div class="footer">
         <p>♥ from giles</p>
