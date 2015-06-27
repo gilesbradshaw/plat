@@ -3,9 +3,14 @@
     requirejs.config({
         baseUrl: '/app/scripts',
         paths: {
+            //libraries
             jquery: '/bower_components/jquery/dist/jquery.min',
             knockout: '/bower_components/knockout/dist/knockout.debug',
-            mockHttp: '/test/spec/mockHttp/platinum'
+            mockHttp: '/test/spec/mockHttp/platinum',
+            Squire: '/node_modules/squirejs/src/squire',
+
+            //app
+            'app.platinum.headings': '/app/scripts/platinum/headings' 
         }
     });
 
@@ -33,6 +38,34 @@
             });
         });
     });
+
+    describe('offer view model Testing', function() {
+        // Load modules with requirejs before tests
+        var Model, server, mockHttp;
+        var headings;
+        beforeEach(function(done) {
+            server = sinon.fakeServer.create();
+            requirejs(['Squire'], function(Squire){
+                var injector = new Squire();
+                headings = sinon.spy();
+                injector.mock('app.platinum.headings', headings);
+                injector.require(['platinum/offer', 'mockHttp'], function(_Model, _mockHttp) {
+                    Model = _Model;
+                    mockHttp = _mockHttp;
+                    done(); // We can launch the tests!
+                });
+            });
+        });
+
+        describe('#ajax calls', function(){
+            it('should create headings', function(){
+                new Model();
+                assert(headings.calledOnce);
+            });
+        });
+    });
+
+
 
     describe('product view model Testing', function() {
         // Load modules with requirejs before tests
@@ -73,7 +106,7 @@
         var model, server, mockHttp;
         beforeEach(function(done) {
             server = sinon.fakeServer.create();
-            requirejs(['platinum/headings', 'mockHttp'], function(Model, _mockHttp) {
+            requirejs(['app.platinum.headings', 'mockHttp'], function(Model, _mockHttp) {
                 model = new Model();
                 mockHttp = _mockHttp;
                 done(); // We can launch the tests!

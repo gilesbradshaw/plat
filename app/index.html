@@ -27,21 +27,38 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div style='display:none' data-bind='attr:{style:"display:block"}'>
-      <ul>
-        {{#foreach:headings.headings}}
-          <li>
-            {{name}}
-          </li>
-        {{/foreach}}  
-      </u1>
+      <div data-bind="page: {id: 'start', params:['sbvid'], title: 'plat demo'}">
+        <h1>sbvid: {{sbvid}}</h1>
+         <ul class="nav nav-tabs" data-bind="foreach: $page.children">
+            <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
+        </ul>
+        {{#if:sbvid()==='123'}}
+          <div data-bind="page: {id: 'accessorize', title: 'accessorize'}">
+            accessorize
+          </div>
+        {{/if}}
+        <div data-bind="page: {id: 'warranty', title: 'warranty'}">
+          warranty
+        </div>
+        <div data-bind="page: {id: 's_c', title: 'select and compare'}">
+          <ul>
+            {{#foreach:headings.headings}}
+              <li>
+                {{name}}
+              </li>
+            {{/foreach}}  
+          </u1>
 
-      <ul>
-        {{#foreach:platinumProducts}}
-          <li>
-            {{#component:{name:'platinum-product', params:$data}/}}
-          </li>
-        {{/foreach}}
-      </u1>
+          <ul>
+            {{#foreach:platinumProducts}}
+              <li>
+                {{#component:{name:'platinum-product', params:$data}/}}
+              </li>
+            {{/foreach}}
+          </u1>
+        </div>
+        
+      </div>
     </div>
     <script src="/node_modules/sinon/pkg/sinon-1.15.0.js"></script>
       <div class="footer">

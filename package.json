@@ -27,6 +27,7 @@
     "mocha-sinon": "^1.1.4",
     "opn": "^1.0.1",
     "sinon": "^1.15.3",
+    "squirejs": "^0.2.1",
     "wiredep": "^2.2.2"
   },
   "eslintConfig": {
@@ -44,6 +45,7 @@
   "dependencies": {
     "knockout": "^3.3.0",
     "knockout.punches": "^0.5.1",
+    "pagerjs": "^1.0.0",
     "requirejs": "^2.1.18"
   }
 }
