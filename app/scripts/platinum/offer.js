@@ -5,23 +5,33 @@ define(
     [
         'jquery',
         'knockout',
-        'platinum/product',
-        'app.platinum.headings'
-    ], function($, ko, PlatinumProduct, PlatinumHeadings){
+        'app.platinum.product',
+        'app.platinum.headings',
+        'mockHttp'
+    ], function($, ko, Product, Headings, mockHttp){
 
     var Offer = function() {
+        var self = this;
         this.sbvid = ko.observable();
-        this.headings = new PlatinumHeadings();
-        this.platinumProducts = ko.observableArray();
-        this.sbvid.subscribe(function(){
-            this.platinumProducts(
-                [
-                    new PlatinumProduct('PCP'),
-                    new PlatinumProduct('PCH'),
-                    new PlatinumProduct('HP')
-                ]
-            );
-         }.bind(this));
+        this.headings = new Headings();
+        this.products = ko.observableArray();
+        this.sbvid.subscribe(function(sbvid){
+            $.ajax({
+                method: 'GET',
+                contentType: 'application/json',
+                url: '/sbv/' + sbvid,
+                success: function () {
+                    self.products(
+                        [
+                            new Product('PCP'),
+                            new Product('PCH'),
+                            new Product('HP')
+                        ]
+                    );
+                }
+            });
+            mockHttp.sbv(sbvid);
+         });
     };
     return Offer;
 });

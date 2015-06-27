@@ -10,7 +10,8 @@
             Squire: '/node_modules/squirejs/src/squire',
 
             //app
-            'app.platinum.headings': '/app/scripts/platinum/headings' 
+            'app.platinum.headings': '/app/scripts/platinum/headings',
+            'app.platinum.product': '/app/scripts/platinum/product'
         }
     });
 
@@ -32,8 +33,8 @@
             it('should call params.getProduct when product set', function(){
                 var product = {name: 'prod'};
                 viewModel.product(product);
-                assert(params.getProduct.calledOnce);
-                assert(params.getProduct.args[0][0] === product);
+                assert(params.getProduct.calledOnce, 'getProduct called');
+                assert(params.getProduct.args[0][0] === product, 'getproduct called with product');
                 assert(getProductSpy.calledOnce);
             });
         });
@@ -41,14 +42,15 @@
 
     describe('offer view model Testing', function() {
         // Load modules with requirejs before tests
-        var Model, server, mockHttp;
-        var headings;
+        var Model, mockHttp;
+        var headings, product;
         beforeEach(function(done) {
-            server = sinon.fakeServer.create();
             requirejs(['Squire'], function(Squire){
                 var injector = new Squire();
                 headings = sinon.spy();
+                product = sinon.spy();
                 injector.mock('app.platinum.headings', headings);
+                injector.mock('app.platinum.product', product);
                 injector.require(['platinum/offer', 'mockHttp'], function(_Model, _mockHttp) {
                     Model = _Model;
                     mockHttp = _mockHttp;
@@ -59,8 +61,19 @@
 
         describe('#ajax calls', function(){
             it('should create headings', function(){
-                new Model();
+                new Model(); /*eslint no-new:0 */
                 assert(headings.calledOnce);
+            });
+            it('should get sbv when sbvid set and then create products', function(){
+                var server = sinon.fakeServer.create();
+                var model = new Model();
+                assert(product.callCount === 0, 'no products created with new model');
+                model.sbvid(1);
+                assert(product.callCount === 0, 'no products created with new model');
+                mockHttp.sbv(1, server);
+                assert(server.requests.length === 1, 'one http request made');
+                assert(model.products().length === 3, 'three products created');
+                assert(product.callCount === 3, 'three new products');
             });
         });
     });

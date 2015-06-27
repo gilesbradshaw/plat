@@ -3,6 +3,27 @@
 //mocks http requests.
 define([], function(){
     var mockHttp = {
+        sbv: function(sbvid, server){
+            server = mockHttp.server || server;
+            if(server)
+            {
+                var respondData = {
+                        name: 'sbv',
+                        id: 1
+                    };
+                server.respondWith(
+                    'GET',
+                    '/sbv/' + sbvid,
+                    [
+                        200,
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                        JSON.stringify(respondData)
+                    ]);
+                server.respond();
+            }
+        },
         headings: function(server){
             server = mockHttp.server || server;
             if(server)

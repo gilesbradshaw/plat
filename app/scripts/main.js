@@ -10,7 +10,8 @@ requirejs.config({
         mockHttp: '/test/spec/mockHttp/platinum',
         pager: '/node_modules/pagerjs/pager',
 
-        'app.platinum.headings': '/scripts/platinum/headings'
+        'app.platinum.headings': '/scripts/platinum/headings',
+        'app.platinum.product': '/scripts/platinum/product'
 
     }
 });
