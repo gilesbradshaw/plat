@@ -4,15 +4,15 @@
 requirejs.config({
     baseUrl: 'scripts',
     paths: {
-        jquery: '/bower_components/jquery/dist/jquery.min',
+        jquery: '/bower_components/jquery/jquery.min',
         knockout: '/bower_components/knockout/dist/knockout.debug',
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
-        mockHttp: '/test/spec/mockHttp/platinum',
-        pager: '/node_modules/pagerjs/pager',
+        pager: '/bower_components/pagerjs/pager',
 
         'app.platinum.headings': '/scripts/platinum/headings',
-        'app.platinum.product': '/scripts/platinum/product'
-
+        'app.platinum.products': '/scripts/platinum/products',
+        'app.platinum.product': '/scripts/platinum/product',
+        mockHttp: '/test/spec/mockHttp/platinum'
     }
 });
 

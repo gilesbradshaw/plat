@@ -29,8 +29,8 @@
     <div style='display:none' data-bind='attr:{style:"display:block"}'>
       <div data-bind="page: {id: 'start', params:['sbvid'], title: 'plat demo'}">
         <h1>sbvid: {{sbvid}}</h1>
-         <ul class="nav nav-tabs" data-bind="foreach: $page.children">
-            <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
+        <ul class="nav nav-tabs" data-bind="foreach: $page.children">
+          <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
         </ul>
         {{#if:sbvid()==='123'}}
           <div data-bind="page: {id: 'accessorize', title: 'accessorize'}">
@@ -50,31 +50,21 @@
           </u1>
 
           <ul>
-            {{#foreach:products}}
+            {{#foreach:products.options}}
               <li>
                 {{#component:{name:'platinum-product', params:$data}/}}
               </li>
             {{/foreach}}
           </u1>
         </div>
-        
-      </div>
-    </div>
+      </div>     
+   </div>
     <script src="/node_modules/sinon/pkg/sinon-1.15.0.js"></script>
-      <div class="footer">
-        <p>♥ from giles</p>
-      </div>
+    <div class="footer">
+      <p>♥ from giles</p>
     </div>
-    
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    
+  
+        
     <!-- build:js scripts/main.js -->
     <script async data-main="scripts/main" src="/bower_components/requirejs/require.js"></script>
     <!-- endbuild -->

@@ -5,29 +5,23 @@ define(
     [
         'jquery',
         'knockout',
-        'app.platinum.product',
+        'app.platinum.products',
         'app.platinum.headings',
         'mockHttp'
-    ], function($, ko, Product, Headings, mockHttp){
+    ], function($, ko, Products, Headings, mockHttp){
 
     var Offer = function() {
         var self = this;
         this.sbvid = ko.observable();
         this.headings = new Headings();
-        this.products = ko.observableArray();
+        this.products = new Products();
         this.sbvid.subscribe(function(sbvid){
             $.ajax({
                 method: 'GET',
                 contentType: 'application/json',
                 url: '/sbv/' + sbvid,
-                success: function () {
-                    self.products(
-                        [
-                            new Product('PCP'),
-                            new Product('PCH'),
-                            new Product('HP')
-                        ]
-                    );
+                success: function (sbv) {
+                    self.products.sbv(sbv);
                 }
             });
             mockHttp.sbv(sbvid);

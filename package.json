@@ -43,9 +43,6 @@
     }
   },
   "dependencies": {
-    "knockout": "^3.3.0",
-    "knockout.punches": "^0.5.1",
-    "pagerjs": "^1.0.0",
-    "requirejs": "^2.1.18"
+    
   }
 }

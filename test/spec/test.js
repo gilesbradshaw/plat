@@ -4,14 +4,15 @@
         baseUrl: '/app/scripts',
         paths: {
             //libraries
-            jquery: '/bower_components/jquery/dist/jquery.min',
+            jquery: '/bower_components/jquery/jquery.min',
             knockout: '/bower_components/knockout/dist/knockout.debug',
             mockHttp: '/test/spec/mockHttp/platinum',
             Squire: '/node_modules/squirejs/src/squire',
 
             //app
             'app.platinum.headings': '/app/scripts/platinum/headings',
-            'app.platinum.product': '/app/scripts/platinum/product'
+            'app.platinum.product': '/app/scripts/platinum/product',
+            'app.platinum.products': '/app/scripts/platinum/products'
         }
     });
 
@@ -43,14 +44,15 @@
     describe('offer view model Testing', function() {
         // Load modules with requirejs before tests
         var Model, mockHttp;
-        var headings, product;
+        var headings, products, sbv;
         beforeEach(function(done) {
             requirejs(['Squire'], function(Squire){
                 var injector = new Squire();
                 headings = sinon.spy();
-                product = sinon.spy();
+                sbv = sinon.spy();
+                products = sinon.stub().returns({sbv: sbv});
                 injector.mock('app.platinum.headings', headings);
-                injector.mock('app.platinum.product', product);
+                injector.mock('app.platinum.products', products);
                 injector.require(['platinum/offer', 'mockHttp'], function(_Model, _mockHttp) {
                     Model = _Model;
                     mockHttp = _mockHttp;
@@ -67,17 +69,43 @@
             it('should get sbv when sbvid set and then create products', function(){
                 var server = sinon.fakeServer.create();
                 var model = new Model();
-                assert(product.callCount === 0, 'no products created with new model');
+                assert(products.callCount === 1, 'products created with new model');
+                assert(sbv.callCount === 0, 'sbv not called created with new model');
                 model.sbvid(1);
-                assert(product.callCount === 0, 'no products created with new model');
+                assert(sbv.callCount === 0, 'sbv not called created with sbv set');
                 mockHttp.sbv(1, server);
                 assert(server.requests.length === 1, 'one http request made');
-                assert(model.products().length === 3, 'three products created');
-                assert(product.callCount === 3, 'three new products');
+                assert(sbv.callCount === 1, 'sbv called');
             });
         });
     });
 
+    describe('products view model Testing', function() {
+        // Load modules with requirejs before tests
+        var Model;
+        var product;
+        beforeEach(function(done) {
+            requirejs(['Squire'], function(Squire){
+                var injector = new Squire();
+                product = sinon.spy();
+                injector.mock('app.platinum.product', product);
+                injector.require(['platinum/products'], function(_Model) {
+                    Model = _Model;
+                    done(); // We can launch the tests!
+                });
+            });
+        });
+
+        describe('#ajax calls', function(){
+            it('should get sbv when sbvid set and then create products', function(){
+                var model = new Model();
+                assert(product.callCount === 0, 'no products created with new model');
+                model.sbv(1);
+                assert(model.options().length === 3, 'three products created');
+                assert(product.callCount === 3, 'three new products');
+            });
+        });
+    });
 
 
     describe('product view model Testing', function() {
