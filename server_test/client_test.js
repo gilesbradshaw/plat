@@ -19,6 +19,7 @@ describe('Require js', function(){
 });
 
 global.window = {};
+global.define = requirejs.define;
 
 
 (function () {
@@ -228,4 +229,4 @@ global.window = {};
             });
         });
     });
-})();
+})//;();
