@@ -21,7 +21,7 @@ describe('Require js', function(){
 
 global.window = {};
 global.requirejs = requirejs;
-
+global.define = require('requirejs');
 
 (function () {
     'use strict';
