@@ -23,6 +23,8 @@ global.window = {};
 global.requirejs = requirejs;
 global.define = require('requirejs');
 
+
+
 (function () {
     'use strict';
     requirejs.config({
@@ -73,6 +75,7 @@ global.define = require('requirejs');
         var injector;
         beforeEach(function(done) {
             requirejs(['q', 'squirejs'], function(Q, Squire){
+                console.log("it is" + Squire.toString());
                 injector = new Squire();
                 ajaxPromise = Q.defer();
                 ajax = sinon.stub().returns(ajaxPromise.promise);
