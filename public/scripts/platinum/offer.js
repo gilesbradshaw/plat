@@ -3,12 +3,11 @@
 
 define(
     [
-        'jquery',
+        'ajax',
         'knockout',
         'app.platinum.products',
-        'app.platinum.headings',
-        'mockHttp'
-    ], function($, ko, Products, Headings, mockHttp){
+        'app.platinum.headings'
+    ], function(ajax, ko, Products, Headings){
 
     var Offer = function() {
         var self = this;
@@ -16,15 +15,10 @@ define(
         this.headings = new Headings();
         this.products = new Products();
         this.sbvid.subscribe(function(sbvid){
-            $.ajax({
-                method: 'GET',
-                contentType: 'application/json',
-                url: '/sbv/' + sbvid,
-                success: function (sbv) {
+            ajax.sbv.get(sbvid)
+                .then(function(sbv){
                     self.products.sbv(sbv);
-                }
-            });
-            mockHttp.sbv(sbvid);
+                });
          });
     };
     return Offer;

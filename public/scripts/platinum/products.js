@@ -3,11 +3,9 @@
 
 define(
     [
-        'jquery',
         'knockout',
-        'app.platinum.product',
-        'mockHttp'
-    ], function($, ko, Product){
+        'app.platinum.product'
+    ], function(ko, Product){
 
     var Products = function() {
         this.options = ko.observableArray();

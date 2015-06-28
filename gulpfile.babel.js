@@ -5,6 +5,11 @@ import browserSync from 'browser-sync';
 import del from 'del';
 import {stream as wiredep} from 'wiredep';
 
+import nodemon from 'gulp-nodemon';
+import  mocha from 'gulp-mocha';
+import watch from 'gulp-watch';
+
+
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
@@ -43,13 +48,13 @@ const testLintOptions = {
   }
 };
 
-gulp.task('lint', lint('app/scripts/**/*.js'));
+gulp.task('lint', lint('public/scripts/**/*.js'));
 gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
 gulp.task('html', ['styles'], () => {
-  const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
+  const assets = $.useref.assets({searchPath: ['.tmp', 'public', '.']});
 
-  return gulp.src('app/*.html')
+  return gulp.src('public/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
@@ -60,7 +65,7 @@ gulp.task('html', ['styles'], () => {
 });
 
 gulp.task('images', () => {
-  return gulp.src('app/images/**/*')
+  return gulp.src('public/images/**/*')
     .pipe($.if($.if.isFile, $.cache($.imagemin({
       progressive: true,
       interlaced: true,
@@ -78,15 +83,15 @@ gulp.task('images', () => {
 gulp.task('fonts', () => {
   return gulp.src(require('main-bower-files')({
     filter: '**/*.{eot,svg,ttf,woff,woff2}'
-  }).concat('app/fonts/**/*'))
+  }).concat('public/fonts/**/*'))
     .pipe(gulp.dest('.tmp/fonts'))
     .pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('extras', () => {
   return gulp.src([
-    'app/*.*',
-    '!app/*.html'
+    'public/*.*',
+    '!public/*.html'
   ], {
     dot: true
   }).pipe(gulp.dest('dist'));
@@ -109,14 +114,14 @@ gulp.task('serve', ['styles', 'fonts'], () => {
   });
 
   gulp.watch([
-    'app/*.html',
-    'app/scripts/**/*.js',
-    'app/images/**/*',
+    'public/*.html',
+    'public/scripts/**/*.js',
+    'public/images/**/*',
     '.tmp/fonts/**/*'
   ]).on('change', reload);
 
-  gulp.watch('app/styles/**/*.scss', ['styles']);
-  gulp.watch('app/fonts/**/*', ['fonts']);
+  gulp.watch('public/styles/**/*.scss', ['styles']);
+  gulp.watch('public/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
@@ -138,9 +143,9 @@ gulp.task('serve:test', () => {
     server: {
       baseDir: 'test',
       routes: {
-        '/bower_components': 'bower_components',
+        '/bower_components': 'public/bower_components',
         '/node_modules': 'node_modules',
-        '/app': 'app',
+        '/public': 'public',
         '/test': 'test',
       }
     }
@@ -152,18 +157,18 @@ gulp.task('serve:test', () => {
 
 // inject bower components
 gulp.task('wiredep', () => {
-  gulp.src('app/styles/*.scss')
+  gulp.src('public/styles/*.scss')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)+/
     }))
-    .pipe(gulp.dest('app/styles'));
+    .pipe(gulp.dest('public/styles'));
 
-  gulp.src('app/*.html')
+  gulp.src('public/*.html')
     .pipe(wiredep({
       exclude: ['bootstrap-sass'],
       ignorePath: /^(\.\.\/)*\.\./
     }))
-    .pipe(gulp.dest('app'));
+    .pipe(gulp.dest('public'));
 });
 
 gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
@@ -173,3 +178,30 @@ gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
 gulp.task('default', ['clean'], () => {
   gulp.start('build');
 });
+
+
+//pasted from express project...
+
+// Copy all static images
+gulp.task('test', ()=> {
+  gulp.src('./server_test/*.js')
+    .pipe(mocha({
+      ignoreLeaks: false,
+      reporter: 'nyan'
+    }));   
+});
+
+gulp.task('nodemon', ()=> {
+  nodemon({ script: 'app.js', env: { 'NODE_ENV': 'development' }, nodeArgs: ['--debug=9999']})
+    .on('restart')
+});
+
+// Rerun the task when a file changes
+
+gulp.task('watch', ()=> {
+    gulp.src(['*.js','routes/*.js', 'models/*.js', 'config/*.js'], { read: true })
+        .pipe(watch({ emit: 'all' }));
+});
+
+// The default task (called when you run `gulp` from cli)
+gulp.task('default', ['styles', 'fonts', 'test', 'nodemon', 'watch']);

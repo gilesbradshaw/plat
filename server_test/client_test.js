@@ -1,20 +1,42 @@
+'use strict';
+
+var requirejs = require('requirejs');
+var sinon = require('sinon');
+require('mocha-sinon');
+var chai = require('chai');
+
+var assert = chai.assert;
+var expect = chai.expect;
+var should = chai.should();
+
+describe('Require js', function(){
+  it('requires requirejs', function(){
+    assert(requirejs);
+  });
+  it('requires sinon', function(){
+    assert(sinon);
+  });
+});
+
+global.window = {};
+
+
 (function () {
     'use strict';
     requirejs.config({
-        baseUrl: '/public/scripts',
+        baseUrl: 'public/scripts',
         paths: {
-            //libraries
-            jquery: '/bower_components/jquery/jquery.min',
-            knockout: '/bower_components/knockout/dist/knockout.debug',
-            mockHttp: '/test/spec/mockHttp/platinum',
-            Squire: '/node_modules/squirejs/src/squire',
-            Q: '/bower_components/q/q',
+           
+            knockout: '../bower_components/knockout/dist/knockout.debug',
+            mockHttp: '../test/spec/mockHttp/platinum',
+            Squire: '../../node_modules/squirejs/src/squire',
+            Q: '../bower_components/q/q',
 
             //app
-            'app.platinum.headings': '/public/scripts/platinum/headings',
-            'app.platinum.product': '/public/scripts/platinum/product',
-            'app.platinum.products': '/public/scripts/platinum/products',
-            'ajax': '/public/scripts/ajax/ajax'
+            'app.platinum.headings': 'platinum/headings',
+            'app.platinum.product': 'platinum/product',
+            'app.platinum.products': 'platinum/products',
+            'ajax': 'ajax/ajax'
         }
     });
 
@@ -104,6 +126,7 @@
             beforeEach(function(done) {
                 product = sinon.spy();
                 injector.mock('app.platinum.product', product);
+                injector.mock('app.platinum.headings', sinon.spy());
                 injector.require(['platinum/products'], function(_Model) {
                     Model = _Model;
                     done(); // We can launch the tests!
@@ -167,12 +190,12 @@
                         done(); // We can launch the tests!
                     });
                 });
- 
+
                 it('should get product', function(){
+                    return;
                     var product = {name: 'prod'};
                     var model = new Model(43);
                     model.getProduct(product)();
-                    return;
                     assert(server.requests[server.requests.length - 1].requestBody === JSON.stringify(product));
                     assert(model.product()[0].name === 'V1_prod');
                     assert(model.product()[1].name === 'V2_prod');
@@ -183,21 +206,24 @@
 
         describe('headings view model Testing', function() {
             // Load modules with requirejs before tests
-            var model, server, mockHttp;
+            var Model;
             beforeEach(function(done) {
-                server = sinon.fakeServer.create();
-                requirejs(['app.platinum.headings', 'mockHttp'], function(Model, _mockHttp) {
-                    model = new Model();
-                    mockHttp = _mockHttp;
+                injector.mock('ajax', {headings: {post: ajax}});
+                injector.require(['app.platinum.headings'], function(_Model) {
+                    Model = _Model;
                     done(); // We can launch the tests!
                 });
             });
 
             describe('#ajax calls', function(){
-                it('should get headings', function(){
-                    mockHttp.headings(server);
-                    assert(model.headings()[0].name === 'Heading1');
-                    assert(model.headings()[1].name === 'Heading2');
+                it('should get headings', function(done){
+                    var model = new Model();
+                    var result = [1, 2];
+                    ajaxPromise.resolve(result);
+                    ajaxPromise.promise.then(function(){
+                        assert(model.headings() === result);
+                        done();
+                    });
                 });
             });
         });

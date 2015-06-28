@@ -13,7 +13,7 @@ define([], function(){
                     };
                 server.respondWith(
                     'GET',
-                    '/sbv/' + sbvid,
+                    '/api/posts',
                     [
                         200,
                         {
