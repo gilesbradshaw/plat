@@ -35,6 +35,7 @@
     "q": "^1.4.1",
     "requirejs": "^2.1.18",
     "sinon": "^1.15.3",
+    "squire": "^1.1.8",
     "squirejs": "^0.2.1",
     "supertest": "latest",
     "wiredep": "^2.2.2"
