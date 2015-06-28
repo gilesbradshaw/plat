@@ -30,7 +30,7 @@ global.window = {};
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
             Squire: '../../node_modules/squirejs/src/squire',
-            Q: '../bower_components/q/q',
+            q: '../bower_components/q/q',
 
             //app
             'app.platinum.headings': 'platinum/headings',
@@ -70,7 +70,7 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['Q', 'Squire'], function(Q, Squire){
+            requirejs(['q', 'Squire'], function(Q, Squire){
                 injector = new Squire();
                 ajaxPromise = Q.defer();
                 ajax = sinon.stub().returns(ajaxPromise.promise);
