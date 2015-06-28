@@ -8,6 +8,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var expect = chai.expect;
 var should = chai.should();
+require('global-define')({basePath: __dirname});
 
 describe('Require js', function(){
   it('requires requirejs', function(){
@@ -19,7 +20,7 @@ describe('Require js', function(){
 });
 
 global.window = {};
-global.define = requirejs.define;
+global.requirejs = requirejs;
 
 
 (function () {
@@ -229,4 +230,4 @@ global.define = requirejs.define;
             });
         });
     });
-})//;();
+})();
