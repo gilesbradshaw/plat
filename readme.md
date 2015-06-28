@@ -1,5 +1,7 @@
 #Simple application using knockout
 
+[![Build Status](https://travis-ci.org/gilesbradshaw/plat.svg)](https://travis-ci.org/gilesbradshaw/plat)
+
 to test 
     
     gulp serve:test
