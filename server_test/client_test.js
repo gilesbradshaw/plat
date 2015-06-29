@@ -31,6 +31,7 @@ global.window = {};
             mockHttp: '../test/spec/mockHttp/platinum',
             squirejs: 'lib/squire',
             tryme: 'lib/try',
+            andme: 'lib/try1',
             q: '../bower_components/q/q',
 
             //app
@@ -71,8 +72,9 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['tryme'], function(tryme){
+            requirejs(['tryme', 'andme'], function(tryme, andme){
                 ajax = tryme;
+                ajaxPromise=andme;
                 done();
             });
         });
@@ -82,6 +84,7 @@ global.window = {};
         describe('Offer view model Testing', function() {
             it('should work', function(){
                     assert(ajax === 'ok');
+                    assert(ajaxPromise === 'ok');
                 });
             // Load modules with requirejs before tests
         });
