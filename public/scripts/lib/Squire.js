@@ -1,9 +1,11 @@
+
 define([], function() {
+   return 'ok';
   var Squire = function(){
 
   };
   
-  return 'ok';
+ 
   Squire.prototype.clean = function (){
     console.log("cleaned");
 
