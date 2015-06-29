@@ -30,8 +30,8 @@ global.window = {};
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
             squirejs: 'lib/squire',
+            andme: 'lib/andme',
             tryme: 'lib/try',
-            andme: 'lib/try1',
             q: '../bower_components/q/q',
 
             //app
@@ -74,7 +74,7 @@ global.window = {};
         beforeEach(function(done) {
             requirejs(['andme', 'tryme'], function(tryme, andme){
                 ajax = tryme;
-                ajaxPromise=andme;
+                ajaxPromise = andme;
                 done();
             });
         });
