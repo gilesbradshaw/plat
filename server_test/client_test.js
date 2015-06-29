@@ -29,7 +29,8 @@ global.window = {};
            
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
-            squirejs: '../lib/squire',
+            squirejs: 'lib/squire',
+            tryme: 'lib/try',
             q: '../bower_components/q/q',
 
             //app
@@ -70,11 +71,13 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['q', 'squirejs'], function(Q, Squire){
-                injector = new Squire();
-                ajaxPromise = Q.defer();
-                ajax = sinon.stub().returns(ajaxPromise.promise);
-                done();
+            requirejs(['tryme'], function(tryme){
+                requirejs(['q', 'squirejs'], function(Q, Squire){
+                    injector = new Squire();
+                    ajaxPromise = Q.defer();
+                    ajax = sinon.stub().returns(ajaxPromise.promise);
+                    done();
+                });
             });
         });
         afterEach(function() {
