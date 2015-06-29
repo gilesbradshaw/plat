@@ -72,12 +72,8 @@ global.window = {};
         var injector;
         beforeEach(function(done) {
             requirejs(['tryme'], function(tryme){
-                requirejs(['q', 'squirejs'], function(Q, Squire){
-                    injector = new Squire();
-                    ajaxPromise = Q.defer();
-                    ajax = sinon.stub().returns(ajaxPromise.promise);
-                    done();
-                });
+                ajax = tryme;
+                done();
             });
         });
         afterEach(function() {
@@ -85,7 +81,7 @@ global.window = {};
         });
         describe('Offer view model Testing', function() {
             it('should work', function(){
-                    assert(true);
+                    assert(ajax === 'ok');
                 });
             // Load modules with requirejs before tests
         });
