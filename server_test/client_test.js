@@ -30,7 +30,7 @@ global.window = {};
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
             squirejs: 'lib/squire',
-            tryme: 'lib/try',
+            tryme: 'lib/try1',
             q: '../bower_components/q/q',
 
             //app
