@@ -72,13 +72,13 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['andme', 'tryme'], function(tryme, andme){
-                requirejs(['squirejs'], function(){
+            requirejs(['squirejs','andme', 'tryme'], function(sqioire, tryme, andme){
+               // requirejs(['squirejs'], function(){
                     ajax = tryme;
                     ajaxPromise = andme;
                     done();
 
-                });
+                //});
             });
         });
         afterEach(function() {

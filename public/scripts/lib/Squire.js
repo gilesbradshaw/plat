@@ -6,5 +6,5 @@ define(function() {
     console.log("cleaned");
 
   };
-  return Squire;
+  return Squire; 
 });
