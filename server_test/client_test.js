@@ -72,7 +72,7 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['tryme', 'andme'], function(tryme, andme){
+            requirejs(['andme', 'tryme'], function(tryme, andme){
                 ajax = tryme;
                 ajaxPromise=andme;
                 done();
