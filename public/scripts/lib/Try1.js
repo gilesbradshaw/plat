@@ -1,10 +1,3 @@
-console.log("SQIRRRREEEEEEEEE");
-define(function() {
-  var Squire = function(){
-
-  };
-  Squire.prototype.clean = function (){
-    console.log("cleaned");
-  };
-  return Squire;
+define([], function(){
+    return 'ok';
 });
