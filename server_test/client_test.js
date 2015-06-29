@@ -73,9 +73,12 @@ global.window = {};
         var injector;
         beforeEach(function(done) {
             requirejs(['andme', 'tryme'], function(tryme, andme){
-                ajax = tryme;
-                ajaxPromise = andme;
-                done();
+                requirejs(['squirejs'], function(){
+                    ajax = tryme;
+                    ajaxPromise = andme;
+                    done();
+
+                });
             });
         });
         afterEach(function() {
