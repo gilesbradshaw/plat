@@ -77,7 +77,7 @@ global.window = {};
             });
         });
         afterEach(function() {
-            injector.clean();
+            //injector.clean();
         });
         describe('Offer view model Testing', function() {
             it('should work', function(){
