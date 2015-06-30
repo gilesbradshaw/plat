@@ -29,7 +29,7 @@ global.window = {};
            
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
-            squirejs: 'lib/try2',
+            squirejs: 'lib/try3',
             andme: 'lib/try1',
             tryme: 'lib/try',
             q: '../bower_components/q/q',
