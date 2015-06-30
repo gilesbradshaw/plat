@@ -107,7 +107,6 @@ global.define = require('requirejs');
                 });
                 it('should get sbv when sbvid set and then create products', function(){
                     var model = new Model();
-                    assert(false);
                     assert(products.callCount === 1, 'products created with new model');
                     model.sbvid(1);
                     assert(sbv.callCount === 0, 'sbv not called created with sbv set');
