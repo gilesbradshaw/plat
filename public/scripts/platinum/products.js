@@ -4,18 +4,18 @@
 define(
     [
         'knockout',
-        'app.platinum.product'
-    ], function(ko, Product){
+        'app.platinum.product-category'
+    ], function(ko, ProductCategory){
 
     var Products = function() {
-        this.options = ko.observableArray();
+        this.categories = ko.observableArray();
     };
     Products.prototype.sbv = function(){
-        this.options(
+        this.categories(
             [
-                new Product('PCP'),
-                new Product('PCH'),
-                new Product('HP')
+                new ProductCategory('PCP'),
+                new ProductCategory('PCH'),
+                new ProductCategory('HP')
             ]
         );
     };

@@ -8,7 +8,7 @@ module.exports = function(app) {
   api.posts = function (req, res) {
     Post.find(function(err, posts) {
       if (err) {
-        res.json(500, err);
+        res.status(500).json(err);
       } else {    
         res.json({posts: posts});
       }
@@ -22,7 +22,7 @@ module.exports = function(app) {
       if (err) {
         res.json(404, err);
       } else {
-        res.json(200, {post: post});
+        res.status(200).json({post: post});
       }
     });
   };
@@ -32,18 +32,18 @@ module.exports = function(app) {
     
     var post;
       
-    if(typeof req.body.post == 'undefined'){
-      return res.json(500, {message: 'post is undefined'});
+    if(typeof req.body.post === 'undefined'){
+      return res.status(500).json({message: 'post is undefined'});
     }
 
     post = new Post(req.body.post);
 
     post.save(function (err) {
       if (!err) {
-        console.log("created post");
-        return res.json(201, post.toObject());
+        console.log('created post');
+        return res.status(201).json(post.toObject());
       } else {
-         return res.json(500, err);
+         return res.status(500).json(err);
       }
     });
 
@@ -81,9 +81,9 @@ module.exports = function(app) {
       return post.save(function (err) {
         if (!err) {
           console.log("updated post");
-          return res.json(200, post.toObject());        
+          return res.status(200).json(post.toObject());        
         } else {
-         return res.json(500, err);
+         return res.status(500).json(err);
         }
         return res.json(post);
       });
@@ -98,10 +98,10 @@ module.exports = function(app) {
       return post.remove(function (err) {
         if (!err) {
           console.log("removed post");
-          return res.send(204);
+          return res.sendStatus(204);
         } else {
           console.log(err);
-          return res.json(500, err);
+          return res.status(500).json(err);
         }
       });
     });

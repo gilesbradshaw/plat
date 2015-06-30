@@ -2,13 +2,13 @@
 
 var requirejs = require('requirejs');
 var sinon = require('sinon');
+
 require('mocha-sinon');
 var chai = require('chai');
 
-var assert = chai.assert;
-var expect = chai.expect;
-var should = chai.should();
-//require('global-define')({basePath: __dirname});
+global.assert = chai.assert;
+global.expect = chai.expect;
+global.should = chai.should();
 
 describe('Require js', function(){
   it('requires requirejs', function(){
@@ -26,19 +26,19 @@ global.define = require('requirejs');
 
 
 (function () {
-    'use strict';
     requirejs.config({
         baseUrl: 'public/scripts',
         paths: {
-           
             knockout: '../bower_components/knockout/dist/knockout.debug',
             squirejs: 'lib/Squire',
             q: '../bower_components/q/q',
 
             //app
+            'app.platinum.sbv': 'platinum/sbv',
             'app.platinum.headings': 'platinum/headings',
-            'app.platinum.product': 'platinum/product',
+            'app.platinum.product-category': 'platinum/product-category',
             'app.platinum.products': 'platinum/products',
+            'app.platinum.product': 'platinum/product',
             'ajax': 'ajax/ajax'
         }
     });
@@ -83,6 +83,116 @@ global.define = require('requirejs');
         afterEach(function() {
             injector.clean();
         });
+
+        describe('Sbv view model list Testing', function() {
+            var Model, ajaxInjected = {};
+            beforeEach(function(done) {
+                injector.mock('ajax', ajaxInjected);
+                injector.require(['platinum/sbv'], function(_Model) {
+                    Model = _Model;
+                    done();
+                });
+            });
+
+            describe('list', function(){
+                beforeEach(function(){
+                    ajaxInjected.sbv = {list: ajax};
+                });
+                it('should get sbvs', function(done){
+                    var model = new Model();
+                    assert(!ajax.calledOnce, 'no ajax call on create');
+                    model.refresh();
+                    assert(ajax.calledOnce, 'ajax call on refresh');
+                    ajaxPromise.resolve('sbvs');
+                    ajaxPromise.promise.then(function(){
+                        assert(model.items() === 'sbvs', 'sbvs set');
+                        done();
+                    });
+                });
+            });
+            describe('new', function(){
+                it('should make a new sbv', function(){
+                    var model = new Model();
+                    model.new('sbv');
+                    assert(model.item().title() === undefined, 'new sbv created');
+                });
+            });
+            describe('get', function(){
+                beforeEach(function(){
+                    ajaxInjected.sbv = {get: ajax};
+                });
+                it('should get sbv', function(done){
+                    var model = new Model();
+                    assert(!ajax.calledOnce, 'no ajax call on create');
+                    model.get('sbv');
+                    assert(ajax.calledOnce, 'ajax call on create');
+                    assert(ajax.args[0][0] === 'sbv');
+                    assert(model.item() === undefined);
+                    ajaxPromise.resolve('sbv!');
+                    ajaxPromise.promise.then(function(){
+                        assert(model.item() === 'sbv!', 'sbv set');
+                        done();
+                    });
+                });
+            });
+            describe('post', function(){
+                beforeEach(function(){
+                    ajaxInjected.sbv = {post: ajax};
+                });
+                it('should post sbv', function(done){
+                    var model = new Model();
+                    assert(!ajax.calledOnce, 'no ajax call on create');
+                    model.post('sbv');
+                    assert(ajax.calledOnce, 'ajax call on create');
+                    assert(ajax.args[0][0] === 'sbv');
+                    assert(model.item() === undefined);
+                    ajaxPromise.resolve('sbv!');
+                    ajaxPromise.promise.then(function(){
+                        assert(model.item() === 'sbv!', 'sbv set');
+                        done();
+                    });
+                });
+            });
+            describe('put', function(){
+                beforeEach(function(){
+                    ajaxInjected.sbv = {put: ajax};
+                });
+                it('should put sbv', function(done){
+                    var model = new Model();
+                    assert(!ajax.calledOnce, 'no ajax call on create');
+                    model.put('sbv');
+                    assert(ajax.calledOnce, 'ajax call on create');
+                    assert(ajax.args[0][0] === 'sbv');
+                    assert(model.item() === undefined);
+                    ajaxPromise.resolve('sbv!');
+                    ajaxPromise.promise.then(function(){
+                        assert(model.item() === 'sbv!', 'sbv set');
+                        done();
+                    });
+                });
+            });
+            describe('delete', function(){
+                beforeEach(function(){
+                    ajaxInjected.sbv = {'delete': ajax};
+                });
+                it('should delete sbv', function(done){
+                    var model = new Model();
+                    model.refresh = sinon.spy();
+                    assert(!ajax.calledOnce, 'no ajax call on create');
+                    model.item(1);
+                    model['delete']('sbv'); /* eslint dot-notation: 0*/
+                    assert(ajax.calledOnce, 'ajax call on create');
+                    assert(ajax.args[0][0] === 'sbv');
+                    ajaxPromise.resolve();
+                    ajaxPromise.promise.then(function(){
+                        assert(model.refresh.calledOnce, 'model refreshed');
+                        assert(model.item() === 1, 'doesn\'t delete selected item');
+                        done();
+                    });
+                });
+            });
+        });
+
         describe('Offer view model Testing', function() {
             // Load modules with requirejs before tests
             var Model;
@@ -125,10 +235,10 @@ global.define = require('requirejs');
         describe('products view model Testing', function() {
             // Load modules with requirejs before tests
             var Model;
-            var product;
+            var productCategory;
             beforeEach(function(done) {
-                product = sinon.spy();
-                injector.mock('app.platinum.product', product);
+                productCategory = sinon.spy();
+                injector.mock('app.platinum.product-category', productCategory);
                 injector.mock('app.platinum.headings', sinon.spy());
                 injector.require(['platinum/products'], function(_Model) {
                     Model = _Model;
@@ -139,28 +249,33 @@ global.define = require('requirejs');
             describe('#ajax calls', function(){
                 it('should get sbv when sbvid set and then create products', function(){
                     var model = new Model();
-                    assert(product.callCount === 0, 'no products created with new model');
+                    assert(productCategory.callCount === 0, 'no product categories created with new model');
                     model.sbv(1);
-                    assert(model.options().length === 3, 'three products created');
-                    assert(product.callCount === 3, 'three new products');
+                    assert(model.categories().length === 3, 'three product categories created');
+                    assert(productCategory.callCount === 3, 'three new product categories');
                 });
             });
         });
 
-
-
-        describe('product view model Testing', function() {
+        describe('product category view model Testing', function() {
             // Load modules with requirejs before tests
-            var Model, server;
+            var Model, Product;
             describe('#get products', function(){
                 beforeEach(function(done) {
+                    Product = sinon.stub().returns('Product');
+                    injector.mock('app.platinum.product', Product);
                     injector.mock('ajax', {products: {post: ajax}});
-                    injector.require(['platinum/product'], function(_Model) {
+                    injector.require(['platinum/product-category'], function(_Model) {
                         Model = _Model;
                         done(); // We can launch the tests!
                     });
                 });
-
+                it('should have a new product', function(){
+                    var model = new Model();
+                    console.log(model.product);
+                    assert(Product.callCount === 1);
+                    //work outy how to test for product return
+                });
                 it('should get products', function(done){
                     var model = new Model(42);
                     assert(ajax.callCount === 1, 'get products ajax called');
@@ -173,18 +288,12 @@ global.define = require('requirejs');
                         done();
                     });
                 });
-                it('should get product', function(){
-                    return;
-                    var product = {name: 'prod'};
-                    var model = new Model(43);
-                    model.getProduct(product)();
-                    mockHttp.product(product, server);
-                    assert(server.requests[server.requests.length - 1].requestBody === JSON.stringify(product));
-                    assert(model.product()[0].name === 'V1_prod');
-                    assert(model.product()[1].name === 'V2_prod');
-                    assert(model.product().length === 2);
-                });
             });
+        });
+
+        describe('product view model Testing', function() {
+            // Load modules with requirejs before tests
+            var Model;
             describe('#get product', function(){
                 beforeEach(function(done) {
                     injector.mock('ajax', {product: {post: ajax}});
@@ -193,19 +302,23 @@ global.define = require('requirejs');
                         done(); // We can launch the tests!
                     });
                 });
-
-                it('should get product', function(){
-                    return;
-                    var product = {name: 'prod'};
-                    var model = new Model(43);
-                    model.getProduct(product)();
-                    assert(server.requests[server.requests.length - 1].requestBody === JSON.stringify(product));
-                    assert(model.product()[0].name === 'V1_prod');
-                    assert(model.product()[1].name === 'V2_prod');
-                    assert(model.product().length === 2);
+                it('should get product', function(done){
+                    var model = new Model();
+                    assert(ajax.callCount === 0, 'get product ajax not called');
+                    model.product('product');
+                    assert(ajax.callCount === 1, 'get product ajax called');
+                    assert(ajax.args[0][0] === 'product');
+                    assert(!model.items().length, 'no items before ajax returns data');
+                    ajaxPromise.resolve([1, 2, 3]);
+                    ajaxPromise.promise.then(function(){
+                        assert(model.items()[0] === 1);
+                        assert(model.items().length === 3);
+                        done();
+                    });
                 });
             });
         });
+
 
         describe('headings view model Testing', function() {
             // Load modules with requirejs before tests

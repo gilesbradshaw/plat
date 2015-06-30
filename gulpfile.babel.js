@@ -184,12 +184,22 @@ gulp.task('default', ['clean'], () => {
 
 // Copy all static images
 gulp.task('test', ()=> {
-  gulp.src('./server_test/*.js')
+  gulp.src('./server-test/*.js')
     .pipe(mocha({
       ignoreLeaks: false,
       reporter: 'nyan'
     }));   
 });
+
+// Copy all static images
+gulp.task('test:api', ()=> {
+  gulp.src('./api-test/*.js')
+    .pipe(mocha({
+      ignoreLeaks: false,
+      reporter: 'nyan'
+    }));   
+});
+
 
 gulp.task('nodemon', ()=> {
   nodemon({ script: 'app.js', env: { 'NODE_ENV': 'development' }, nodeArgs: ['--debug=9999']})
