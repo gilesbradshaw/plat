@@ -29,7 +29,7 @@ global.window = {};
            
             knockout: '../bower_components/knockout/dist/knockout.debug',
             mockHttp: '../test/spec/mockHttp/platinum',
-            squirejs: 'lib/squire',
+            trymetoo: 'lib/try2',
             andme: 'lib/try1',
             tryme: 'lib/try',
             q: '../bower_components/q/q',
@@ -72,7 +72,7 @@ global.window = {};
         var ajaxPromise;
         var injector;
         beforeEach(function(done) {
-            requirejs(['squirejs','andme', 'tryme'], function(sqioire, tryme, andme){
+            requirejs(['trymetoo', 'andme', 'tryme'], function(sqioire, tryme, andme){
                // requirejs(['squirejs'], function(){
                     ajax = tryme;
                     ajaxPromise = andme;
