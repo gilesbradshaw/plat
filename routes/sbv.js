@@ -10,7 +10,7 @@ module.exports = function(app) {
       if (err) {
         res.status(500).json(err);
       } else {
-        res.json({sbvs: sbvs});
+        res.json(sbvs);
       }
     });
   };
@@ -22,7 +22,7 @@ module.exports = function(app) {
       if (err) {
         res.status(404).json(err);
       } else {
-        res.status(200).json({sbv: sbv});
+        res.status(200).json(sbv);
       }
     });
   };

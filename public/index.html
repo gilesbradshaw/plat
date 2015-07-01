@@ -32,6 +32,12 @@
         <ul class="nav nav-tabs" data-bind="foreach: $page.children">
           <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
         </ul>
+        <ul>
+
+        {{#foreach:sbv.items}}
+          <li>{{title}}</li>
+        {{/foreach}}
+        </ul>
         {{#if:sbvid()==='123'}}
           <div data-bind="page: {id: 'accessorize', title: 'accessorize'}">
             accessorize

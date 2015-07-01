@@ -6,11 +6,14 @@ define(
         'ajax',
         'knockout',
         'app.platinum.products',
-        'app.platinum.headings'
-    ], function(ajax, ko, Products, Headings){
+        'app.platinum.headings',
+        'app.platinum.sbv'
+    ], function(ajax, ko, Products, Headings, Sbv){
 
     var Offer = function() {
         var self = this;
+        this.sbv = new Sbv();
+        this.sbv.refresh();
         this.sbvid = ko.observable();
         this.headings = new Headings();
         this.products = new Products();

@@ -201,6 +201,7 @@ global.define = require('requirejs');
                 headings = sinon.spy();
                 sbv = sinon.spy();
                 products = sinon.stub().returns({sbv: sbv, yes: 111});
+                injector.mock('app.platinum.sbv', sinon.stub().returns({refresh: sinon.spy()}));
                 injector.mock('app.platinum.headings', headings);
                 injector.mock('app.platinum.products', products);
                 injector.mock('ajax', {sbv: {get: ajax}});

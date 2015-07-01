@@ -12,6 +12,13 @@ define([
                     contentType: 'application/json',
                     url: '/api/posts'
                 });
+            },
+            list: function(){
+                return $.ajax({
+                    method: 'GET',
+                    contentType: 'application/json',
+                    url: '/api/sbvs'
+                });
             }
         },
         headings: {
