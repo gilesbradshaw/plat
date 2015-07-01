@@ -11,6 +11,7 @@ requirejs.config({
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
         pager: '/bower_components/pagerjs/pager',
 
+        'app.platinum.offer': '/scripts/platinum/offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',
         'app.platinum.product': '/scripts/platinum/product',
@@ -26,7 +27,7 @@ define(
     [
         'knockout',
         'pager',
-        'platinum/Offer',
+        'app.platinum.offer',
         'knockout.punches'
     ], function(ko, pager, Offer){
 
