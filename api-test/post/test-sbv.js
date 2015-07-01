@@ -15,9 +15,9 @@ module.exports = function(app){
         .post('/api/sbv')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .send({ 'sbv': {
+        .send({
           'title': 'Hell Is Other Robots'
-        } })
+        })
         .expect(201)
         .end(function(err, res) {
           if (err) {
@@ -56,7 +56,7 @@ module.exports = function(app){
         .put('/api/sbv/' + _id )
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .send({ 'sbv': { 'title': 'Hell Is Where There Are No Robots' } })
+        .send({ 'title': 'Hell Is Where There Are No Robots' })
         .expect(200, done);
       });
     });
