@@ -279,6 +279,7 @@ global.define = require('requirejs');
                 });
                 it('should get products', function(done){
                     var model = new Model(42);
+                    assert(false);
                     assert(ajax.callCount === 1, 'get products ajax called');
                     assert(ajax.args[0][0] === 42);
                     assert(!model.products().length, 'no products before ajax returns data');
