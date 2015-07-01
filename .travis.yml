@@ -8,4 +8,11 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
+deploy:
+  provider: heroku
+  api_key: 90e6a4fc-044f-4d23-a420-801124a84491
+  app: gilesbradshaw
+
+
+
 
