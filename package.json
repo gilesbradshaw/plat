@@ -3,33 +3,6 @@
     "node": ">=0.12.0"
   },
   "devDependencies": {
-  },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "browser": true
-    },
-    "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
-  },
-  "dependencies": {
-    "body-parser": "latest",
-    "ejs": "latest",
-    "errorhandler": "latest",
-    "express": "latest",
-    "knockout": "^3.3.0",
-    "method-override": "latest",
-    "mongoose": "latest",
-    "morgan": "latest",
-    "superagent": "^1.2.0",
-
-
-
-
     "babel": "^5.5.6",
     "bower": "latest",
     "browser-sync": "^2.2.1",
@@ -68,10 +41,32 @@
     "squirejs": "^0.2.1",
     "supertest": "latest",
     "wiredep": "^2.2.2"
-    
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "quotes": [
+        2,
+        "single"
+      ]
+    }
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "ejs": "latest",
+    "errorhandler": "latest",
+    "express": "latest",
+    "knockout": "^3.3.0",
+    "method-override": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "superagent": "^1.2.0"
   },
   "scripts": {
     "test": "gulp test",
-    "start": "app.js"
+    "start": "node app.js"
   }
 }
