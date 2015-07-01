@@ -19,6 +19,14 @@ define([
                     contentType: 'application/json',
                     url: '/api/sbvs'
                 });
+            },
+            post: function(sbv){
+                return $.ajax({
+                    method: 'POST',
+                    contentType: 'application/json',
+                    url: '/api/sbv',
+                    data: JSON.stringify(sbv)
+                });
             }
         },
         headings: {
