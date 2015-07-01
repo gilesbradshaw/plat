@@ -30,11 +30,11 @@ module.exports = function(app) {
   // POST
   api.addSbv = function (req, res) {
     var sbv;
-    if(typeof req.body.sbv === 'undefined'){
+    if(typeof req.body === 'undefined'){
       return res.status(500).json({message: 'sbv is undefined'});
     }
 
-    sbv = new Sbv(req.body.sbv);
+    sbv = new Sbv(req.body);
 
     sbv.save(function (err) {
       if (!err) {
@@ -52,11 +52,11 @@ module.exports = function(app) {
     var id = req.params.id;
 
     Sbv.findById(id, function (err, sbv) {
-      if(typeof req.body.sbv["title"] !== 'undefined'){
+      if(typeof req.body["title"] !== 'undefined'){
         sbv['title'] = req.body.sbv['title'];
       }
 
-      if(typeof req.body.sbv['created'] !== 'undefined'){
+      if(typeof req.body['created'] !== 'undefined'){
         sbv['created'] = req.body.sbv['created'];
       }  
     
