@@ -53,11 +53,11 @@ module.exports = function(app) {
 
     Sbv.findById(id, function (err, sbv) {
       if(typeof req.body["title"] !== 'undefined'){
-        sbv['title'] = req.body.sbv['title'];
+        sbv['title'] = req.body['title'];
       }
 
       if(typeof req.body['created'] !== 'undefined'){
-        sbv['created'] = req.body.sbv['created'];
+        sbv['created'] = req.body['created'];
       }  
     
 
