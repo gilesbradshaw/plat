@@ -15,7 +15,7 @@ define(
     };
     Sbv.prototype.refresh = function(){
         var self = this;
-        ajax.sbv.put({title: "Hell is other people's robots"});
+        ajax.sbv.post({title: "Hell is other people's robots"});
         ajax.sbv.list()
             .then(function(sbvs){
                 self.items(sbvs);
