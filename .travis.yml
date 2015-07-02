@@ -7,6 +7,10 @@ node_js:
   - "iojs"
   - "iojs-v1.0.4" 
 
+script:
+    - gulp styles
+    - gulp fonts
+
 deploy:
   provider: heroku
   api_key: 90e6a4fc-044f-4d23-a420-801124a84491
