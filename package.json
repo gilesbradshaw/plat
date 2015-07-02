@@ -54,8 +54,8 @@
     }
   },
   "dependencies": {
-    "bower": "latest",
     "body-parser": "latest",
+    "bower": "latest",
     "ejs": "latest",
     "errorhandler": "latest",
     "express": "latest",
@@ -63,7 +63,8 @@
     "method-override": "latest",
     "mongoose": "latest",
     "morgan": "latest",
-    "superagent": "^1.2.0"
+    "superagent": "^1.2.0",
+    "webdriverjs": "^1.7.5"
   },
   "scripts": {
     "test": "gulp test",
