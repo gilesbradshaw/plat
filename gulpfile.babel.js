@@ -8,14 +8,14 @@ import {stream as wiredep} from 'wiredep';
 import nodemon from 'gulp-nodemon';
 import  mocha from 'gulp-mocha';
 import watch from 'gulp-watch';
+import util from 'gulp-util';
 
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 gulp.task('styles', () => {
-  console.log('doing gulp styles......');
-  throw(1);
+  util.log('doing gulp styles......');
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
@@ -27,6 +27,9 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer({browsers: ['last 1 version']}))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
+    .on('end', function(){
+      util.log("wrote styles!!!!!!!!!!!!!!!!!!!!!!!!");
+    })
     .pipe(reload({stream: true}));
 
 
