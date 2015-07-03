@@ -20,6 +20,9 @@ gulp.task('styles', () => {
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
+      loadPath: [
+            '/public/bower_components/bootstrap-sass/assets/stylesheets',
+       ],
       outputStyle: 'expanded',
       precision: 10,
       includePaths: ['.']
