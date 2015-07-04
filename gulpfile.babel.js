@@ -224,4 +224,4 @@ gulp.task('watch', ()=> {
 });
 
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['styles', 'fonts', 'test', 'nodemon', 'watch']);
+gulp.task('default', ['styles', 'fonts', /*'test', */'nodemon', 'watch']);

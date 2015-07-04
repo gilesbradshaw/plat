@@ -10,5 +10,8 @@
         "sinon": false,
         "assert": false
 
+    },
+    "rules": {
+        "no-underscore-dangle": 0
     }
 }

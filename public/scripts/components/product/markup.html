@@ -1,18 +1,15 @@
-<div>{{params.type}}</div>
-
-<select value={{product}} options={{params.products}}  data-bind='optionsText:"name"'>
+<select value={{product}} options={{params.products}}  data-bind='optionsText:"title"'>
 </select>
-<span click={{params.getProducts}}>refresh</span>
 {{#with:product}}
     <div>
-        {{name}}
-        <span click={{$parent.params.getProduct($data)}}>refresh</span>
+        {{title}}
+        <span click={{$parent.getProduct($data)}}>refresh</span>
     </div>
 {{/with}}
 <ul>
-    {{#foreach:params.product}}
+    {{#foreach:parameters}}
         <li>
-            {{name}}
+            {{title}}
         </li>
     {{/foreach}}
 </ul>

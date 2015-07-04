@@ -3,21 +3,26 @@
 
 define(
     [
+        'ajax',
         'knockout',
         'app.platinum.product-category'
-    ], function(ko, ProductCategory){
+    ], function(ajax, ko, ProductCategory){
 
     var Products = function() {
-        this.categories = ko.observableArray();
+        this.products = ko.observableArray();
+        this.categories = ko.observableArray([
+            new ProductCategory('PCP', this.products),
+            new ProductCategory('PCH', this.products),
+            new ProductCategory('HP', this.products)
+        ]);
+        this.sbv = ko.observable();
+        this.sbv.subscribe(this.refresh.bind(this));
     };
-    Products.prototype.sbv = function(){
-        this.categories(
-            [
-                new ProductCategory('PCP'),
-                new ProductCategory('PCH'),
-                new ProductCategory('HP')
-            ]
-        );
+    Products.prototype.refresh = function(){
+        var self = this;
+        ajax.products.post(this.sbv()).then(function(data){
+            self.products(data);
+        });
     };
     return Products;
 });

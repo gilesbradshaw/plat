@@ -36,7 +36,7 @@
         <ul>
 
         {{#foreach:sbv.items}}
-          <li>{{title}}</li>
+          <li><div>{{_id}}</div><div>{{title}}</div></li>
         {{/foreach}}
         </ul>
         {{#if:sbvid()==='123'}}
@@ -55,13 +55,12 @@
               </li>
             {{/foreach}}  
           </u1>
-          <ul>
-            {{#foreach:products.categories}}
-              <li>
-                {{#component:{name:'platinum-product', params:$data}/}}
-              </li>
-            {{/foreach}}
-          </u1>
+          <span click={{products.refresh}}>refresh</span>
+
+          {{#component:{name:'platinum-category', params:products}/}}
+          {{#component:{name:'platinum-category', params:products}/}}
+          {{#component:{name:'platinum-category', params:products}/}}
+          
         </div>
       </div>     
    </div>

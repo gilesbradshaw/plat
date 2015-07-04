@@ -10,7 +10,7 @@ define([
                 return $.ajax({
                     method: 'GET',
                     contentType: 'application/json',
-                    url: '/api/posts'
+                    url: '/api/sbv/' + sbvid
                 });
             },
             list: function(){
@@ -40,14 +40,13 @@ define([
             }
         },
         products: {
-            post: function(type){
+            post: function(sbv){
                 return $.ajax({
                     method: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify(type),
-                    url: '/products/' + type
+                    data: JSON.stringify(sbv),
+                    url: 'api/products'
                 });
-
             }
         },
         product: {
@@ -56,9 +55,24 @@ define([
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(product),
-                    url: '/product'
+                    url: 'api/product'
                 });
-
+            }
+        },
+        parameters: {
+            list: function(product){
+                return $.ajax({
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({title: 'parammmmmm'}),
+                    url: 'api/parameters/' + product._id
+                }).then(function (){
+                    return $.ajax({
+                        method: 'GET',
+                        contentType: 'application/json',
+                        url: 'api/parameters/' + product._id
+                    });
+                });
             }
         }
     };

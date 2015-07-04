@@ -1,5 +1,4 @@
 'use strict';
-//headings view model - fetches headings for products - what each row represents.
 
 define(
     [

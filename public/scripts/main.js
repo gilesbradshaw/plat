@@ -11,10 +11,9 @@ requirejs.config({
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
         pager: '/bower_components/pagerjs/pager',
 
-        'app.platinum.offer': '/scripts/platinum/offer',
+        'app.platinum.Offer': '/scripts/platinum/Offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',
-        'app.platinum.product': '/scripts/platinum/product',
         'app.platinum.products': '/scripts/platinum/products',
         'app.platinum.product-category': '/scripts/platinum/product-category',
         'ajax': '/scripts/ajax/ajax'
@@ -27,7 +26,7 @@ define(
     [
         'knockout',
         'pager',
-        'app.platinum.offer',
+        'app.platinum.Offer',
         'knockout.punches'
     ], function(ko, pager, Offer){
 
@@ -36,15 +35,11 @@ define(
         viewModel: { require: 'components/product/viewModel' },
         template: { require: 'text!components/product/markup.html' }
     });
+    ko.components.register('platinum-category', {
+        viewModel: { require: 'components/category/viewModel' },
+        template: { require: 'text!components/category/markup.html' }
+    });
     ko.punches.enableAll();
-
-    //fake server for mocked ajax
-    //var server = sinon.fakeServer.create();
-    //server.xhr.useFilters = true;
-    //server.xhr.addFilter(function(method, url) {
-    //    return url.match(/scripts/) !== null;
-    //});
-    //mockHttp.server = server;
 
     var offer = new Offer();
 

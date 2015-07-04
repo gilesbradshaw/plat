@@ -31,63 +31,94 @@ global.define = require('requirejs');
         paths: {
             knockout: '../bower_components/knockout/dist/knockout.debug',
             squirejs: 'lib/Squire',
-            q: '../bower_components/q/q',
+            q: '../bower_components/q/q'
 
-            //app
-            'app.platinum.sbv': 'platinum/sbv',
-            'app.platinum.headings': 'platinum/headings',
-            'app.platinum.product-category': 'platinum/product-category',
-            'app.platinum.products': 'platinum/products',
-            'app.platinum.product': 'platinum/product',
-            'ajax': 'ajax/ajax'
         }
     });
 
-    describe('platinum component viewmodel testing', function() {
-        // Load modules with requirejs before tests
-        var viewModel, params, getProductSpy;
-        beforeEach(function(done) {
-            requirejs(['components/product/viewModel'], function(ViewModel) {
-                getProductSpy = sinon.spy();
-                params = {
-                    getProduct: sinon.stub().returns(getProductSpy)
-                };
-                viewModel = new ViewModel(params);
-                done(); // We can launch the tests!
-            });
-        });
-
-        describe('#view model functions', function(){
-            it('should call params.getProduct when product set', function(){
-                var product = {name: 'prod'};
-                viewModel.product(product);
-                assert(params.getProduct.calledOnce, 'getProduct called');
-                assert(params.getProduct.args[0][0] === product, 'getproduct called with product');
-                assert(getProductSpy.calledOnce);
-            });
-        });
-    });
-
     describe('mocked ajax testing', function() {
-        var ajax;
+        var ajax, ajaxInjected;
         var ajaxPromise;
         var injector;
+        var ko;
         beforeEach(function(done) {
-            requirejs(['q', 'squirejs'], function(Q, Squire){
+            requirejs(['knockout', 'q', 'squirejs'], function(_ko, Q, Squire){
+                ko = _ko;
                 injector = new Squire();
                 ajaxPromise = Q.defer();
                 ajax = sinon.stub().returns(ajaxPromise.promise);
+                ajaxInjected = {};
+                injector.mock('ajax', ajaxInjected);
                 done();
             });
         });
         afterEach(function() {
             injector.clean();
         });
-
-        describe('Sbv view model list Testing', function() {
-            var Model, ajaxInjected = {};
+        describe('platinum component category viewmodel testing', function() {
+            // Load modules with requirejs before tests
+            var ViewModel;
             beforeEach(function(done) {
-                injector.mock('ajax', ajaxInjected);
+                injector.require(['components/category/viewModel'], function(_ViewModel) {
+                    ViewModel = _ViewModel;
+                    done(); // We can launch the tests!
+                });
+            });
+            describe('#view model functions', function(){
+                it('should set params to constructor parameter', function(){
+                    assert((new ViewModel('params')).params === 'params');
+                });
+                it('should have an observable category', function(){
+                    assert((new ViewModel('params')).category);
+                    console.log('look into this!!!!!');
+                    //assert(ko.isObservable((new ViewModel('params')).category));
+                });
+            });
+        });
+        describe('platinum component product viewmodel testing', function() {
+            // Load modules with requirejs before tests
+            var ViewModel;
+            beforeEach(function(done) {
+                injector.require(['components/product/viewModel'], function(_ViewModel) {
+                    ViewModel = _ViewModel;
+                    done(); // We can launch the tests!
+                });
+            });
+            describe('#view model functions', function(){
+                it('should set params to constructor parameter', function(){
+                    assert((new ViewModel('params')).params === 'params');
+                });
+                it('should call get parameters when product set and set parameters to result', function(done){
+                    ajaxInjected.parameters = {list: ajax};
+                    var product = {name: 'prod'};
+                    var viewModel = new ViewModel();
+                    viewModel.product(product);
+                    assert(ajax.calledOnce, 'get Parameters called');
+                    assert(ajax.args[0][0] === product, 'getproduct called with product');
+                    ajaxPromise.resolve('parameters');
+                    ajaxPromise.promise.then(function(){
+                        assert(viewModel.parameters() === 'parameters', 'parameters set');
+                        done();
+                    });
+                });
+                it('should post a product when getProduct called and set items to result', function(done){
+                    ajaxInjected.product = {post: ajax};
+                    var product = {name: 'prod'};
+                    var viewModel = new ViewModel();
+                    viewModel.getProduct(product)();
+                    assert(ajax.calledOnce, 'post product called');
+                    assert(ajax.args[0][0] === product, 'post product called with product');
+                    ajaxPromise.resolve('items');
+                    ajaxPromise.promise.then(function(){
+                        assert(viewModel.items() === 'items', 'items set');
+                        done();
+                    });
+                });
+            });
+        });
+        describe('Sbv view model list Testing', function() {
+            var Model;
+            beforeEach(function(done) {
                 injector.require(['platinum/sbv'], function(_Model) {
                     Model = _Model;
                     done();
@@ -205,7 +236,7 @@ global.define = require('requirejs');
                 injector.mock('app.platinum.headings', headings);
                 injector.mock('app.platinum.products', products);
                 injector.mock('ajax', {sbv: {get: ajax}});
-                injector.require(['platinum/offer'], function(_Model) {
+                injector.require(['platinum/Offer'], function(_Model) {
                     Model = _Model;
                     done(); // We can launch the tests!
                 });
@@ -247,86 +278,54 @@ global.define = require('requirejs');
                 });
             });
 
-            describe('#ajax calls', function(){
-                it('should get sbv when sbvid set and then create products', function(){
-                    var model = new Model();
-                    assert(productCategory.callCount === 0, 'no product categories created with new model');
-                    model.sbv(1);
-                    assert(model.categories().length === 3, 'three product categories created');
-                    assert(productCategory.callCount === 3, 'three new product categories');
+            it('should create three product categories when created', function(){
+                var model = new Model();
+                assert(model.categories().length === 3, 'three product categories created');
+                assert(productCategory.callCount === 3, 'three new product categories');
+            });
+
+            it('should post get products when sb set then create products', function(done){
+                ajaxInjected.products = {post: ajax};
+                var model = new Model();
+                model.sbv(1);
+                ajaxPromise.resolve('products');
+                ajaxPromise.promise.then(function(){
+                    assert(model.products() === 'products', 'products set');
+                    done();
                 });
             });
         });
 
-        describe('product category view model Testing', function() {
+        describe('product category view model testing', function() {
             // Load modules with requirejs before tests
-            var Model, Product;
+            var Model;
             describe('#get products', function(){
                 beforeEach(function(done) {
-                    Product = sinon.stub().returns('Product');
-                    injector.mock('app.platinum.product', Product);
-                    injector.mock('ajax', {products: {post: ajax}});
                     injector.require(['platinum/product-category'], function(_Model) {
                         Model = _Model;
                         done(); // We can launch the tests!
                     });
                 });
-                it('should have a new product', function(){
-                    var model = new Model();
-                    console.log(model.product);
-                    assert(Product.callCount === 1);
-                    //work outy how to test for product return
-                });
-                it('should get products', function(done){
-                    var model = new Model(42);
-                    assert(ajax.callCount === 1, 'get products ajax called');
-                    assert(ajax.args[0][0] === 42);
-                    assert(!model.products().length, 'no products before ajax returns data');
-                    ajaxPromise.resolve([1, 2, 3]);
-                    ajaxPromise.promise.then(function(){
-                        assert(model.products()[0] === 1);
-                        assert(model.products().length === 3);
-                        done();
+                it('should filter products by category', function(){
+                    var model = new Model('cat', function(){
+                        return [
+                            {category: 'cat'},
+                            {category: 'cat1'}
+                        ];
                     });
+
+                    assert(model.products().length === 1);
+                    assert(model.products()[0].category === 'cat');
                 });
             });
         });
-
-        describe('product view model Testing', function() {
-            // Load modules with requirejs before tests
-            var Model;
-            describe('#get product', function(){
-                beforeEach(function(done) {
-                    injector.mock('ajax', {product: {post: ajax}});
-                    injector.require(['platinum/product'], function(_Model) {
-                        Model = _Model;
-                        done(); // We can launch the tests!
-                    });
-                });
-                it('should get product', function(done){
-                    var model = new Model();
-                    assert(ajax.callCount === 0, 'get product ajax not called');
-                    model.product('product');
-                    assert(ajax.callCount === 1, 'get product ajax called');
-                    assert(ajax.args[0][0] === 'product');
-                    assert(!model.items().length, 'no items before ajax returns data');
-                    ajaxPromise.resolve([1, 2, 3]);
-                    ajaxPromise.promise.then(function(){
-                        assert(model.items()[0] === 1);
-                        assert(model.items().length === 3);
-                        done();
-                    });
-                });
-            });
-        });
-
 
         describe('headings view model Testing', function() {
             // Load modules with requirejs before tests
             var Model;
             beforeEach(function(done) {
                 injector.mock('ajax', {headings: {post: ajax}});
-                injector.require(['app.platinum.headings'], function(_Model) {
+                injector.require(['platinum/headings'], function(_Model) {
                     Model = _Model;
                     done(); // We can launch the tests!
                 });
