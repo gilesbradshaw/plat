@@ -194,6 +194,30 @@ gulp.task('default', ['clean'], () => {
 
 // Copy all static images
 gulp.task('test', ()=> {
+  var requirejs = require('requirejs');
+  var sinon = require('sinon');
+
+  //require('mocha-sinon');
+  var chai = require('chai');
+
+  global.assert = chai.assert;
+  global.expect = chai.expect;
+  global.should = chai.should();
+
+  global.requirejs = requirejs;
+  global.sinon = sinon;
+  requirejs.config({
+        baseUrl: 'public/scripts',
+        paths: {
+            knockout: '../bower_components/knockout/dist/knockout.debug',
+            squirejs: 'lib/Squire',
+            q: '../bower_components/q/q',
+            testTools: '../../server-test/tools/tools'
+
+        }
+    });
+
+
   gulp.src('./server-test/*.js')
     .pipe(mocha({
       ignoreLeaks: false,

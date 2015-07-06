@@ -1,0 +1,25 @@
+{{#with:item}}
+    <label for='sbvtitle'>title</label>
+    <input id='sbvtitle' type='text' value={{title}}>
+{{/with}}
+<input type='button' click={{$data.refresh}} value="refresh">
+<input type='button' click={{$data.new}} value="new">
+{{#if:item}}
+    {{#ifnot:item()._id}}
+        <input type='button' click={{post(item)}} value="add">
+    {{/ifnot}}
+    {{#if:item()._id}}
+        <input type='button' click={{put(item)}} value="edit">
+    {{/if}}
+{{/if}}
+{{#with:refresh()}}
+    <ul>
+        {{#foreach:items}}
+            <li>
+                <a data-bind='page-href:{path:"../offer", params:{sbvid:_id}}'>{{$data.title}}</a>
+                <input type='button' click={{$parent.delete($data)}} value="delete">
+                <input type='button' click={{$parent.get(_id)}} value="get">
+            </li>
+        {{/foreach}}
+    </ul>
+{{/with}}

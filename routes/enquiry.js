@@ -2,7 +2,7 @@
 module.exports = function(app) {
   // Module dependencies.
     var mongoose = require('mongoose');
-    var Item = mongoose.models.Sbv,
+    var Item = mongoose.models.Enquiry,
     api = {};
 
   // ALL
@@ -92,9 +92,9 @@ module.exports = function(app) {
   };
 
 
-  app.get('/api/sbvs', api.list);
-  app.get('/api/sbv/:id', api.get);
-  app.post('/api/sbv', api.add);
-  app.put('/api/sbv/:id', api.edit);
-  app.delete('/api/sbv/:id', api.delete);
+  app.get('/api/enquiries', api.list);
+  app.get('/api/enquiry/:id', api.get);
+  app.post('/api/enquiry', api.add);
+  app.put('/api/enquiry/:id', api.edit);
+  app.delete('/api/enquiry/:id', api.delete);
 };

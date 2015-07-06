@@ -14,9 +14,11 @@ requirejs.config({
         'app.platinum.Offer': '/scripts/platinum/Offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',
-        'app.platinum.products': '/scripts/platinum/products',
-        'app.platinum.product-category': '/scripts/platinum/product-category',
-        'ajax': '/scripts/ajax/ajax'
+        'ajax': '/scripts/ajax/ajax',
+        'ajax.sbv': '/scripts/ajax/sbv/ajax',
+        'ajax.enquiry': '/scripts/ajax/enquiry/ajax',
+        'ajax.sales-exec': '/scripts/ajax/sales-exec/ajax',
+        'ajax.dealer': '/scripts/ajax/dealer/ajax'
     }
 });
 
@@ -26,22 +28,34 @@ define(
     [
         'knockout',
         'pager',
-        'app.platinum.Offer',
         'knockout.punches'
-    ], function(ko, pager, Offer){
+    ], function(ko, pager){
 
     //register knockout components
-    ko.components.register('platinum-product', {
-        viewModel: { require: 'components/product/viewModel' },
-        template: { require: 'text!components/product/markup.html' }
+    ko.components.register('sbv', {
+        viewModel: { require: 'components/sbv/viewModel' },
+        template: { require: 'text!components/sbv/markup.html' }
     });
-    ko.components.register('platinum-category', {
-        viewModel: { require: 'components/category/viewModel' },
-        template: { require: 'text!components/category/markup.html' }
+    ko.components.register('enquiry', {
+        viewModel: { require: 'components/enquiry/viewModel' },
+        template: { require: 'text!components/enquiry/markup.html' }
     });
+    ko.components.register('sales-exec', {
+        viewModel: { require: 'components/sales-exec/viewModel' },
+        template: { require: 'text!components/sales-exec/markup.html' }
+    });
+    ko.components.register('dealer', {
+        viewModel: { require: 'components/dealer/viewModel' },
+        template: { require: 'text!components/dealer/markup.html' }
+    });
+    ko.components.register('offer', {
+        viewModel: { require: 'components/offer/viewModel' },
+        template: { require: 'text!components/offer/markup.html' }
+    });
+
     ko.punches.enableAll();
 
-    var offer = new Offer();
+    var offer = {};
 
     pager.extendWithPage(offer);
     ko.applyBindings(offer);

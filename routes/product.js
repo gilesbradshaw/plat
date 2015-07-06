@@ -23,11 +23,11 @@ module.exports = function(app) {
    //unorthodox - we are posting car/customer to get an item
   api.product = function (req, res) {
     Product.findById(req.body._id)
-    .then(function(product){
-      res.status(200).json(product);
-    }).catch(function(err){
-      res.status(404).json(err);
-    });
+      .then(function(product){
+        res.status(200).json(product);
+      }).catch(function(err){
+        res.status(404).json(err);
+      });
   };
 
   // PUT unorthodoc this will add or update a product

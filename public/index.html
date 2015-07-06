@@ -28,38 +28,24 @@
     <![endif]-->
     latest deployment change to show adam!
     <div style='display:none' data-bind='attr:{style:"display:block"}'>
-      <div data-bind="page: {id: 'start', params:['sbvid'], title: 'plat demo'}">
-        <h1>sbvid: {{sbvid}}</h1>
+      <div data-bind="page: {id: 'start', title: 'plat demo'}">
         <ul class="nav nav-tabs" data-bind="foreach: $page.children">
           <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
         </ul>
-        <ul>
-
-        {{#foreach:sbv.items}}
-          <li><div>{{_id}}</div><div>{{title}}</div></li>
-        {{/foreach}}
-        </ul>
-        {{#if:sbvid()==='123'}}
-          <div data-bind="page: {id: 'accessorize', title: 'accessorize'}">
-            accessorize
-          </div>
-        {{/if}}
-        <div data-bind="page: {id: 'warranty', title: 'warranty'}">
-          warranty
+        <div data-bind="page: {id: 'sbv', title: 'sbv'}">
+            {{#component:{name:'sbv'}/}}
         </div>
-        <div data-bind="page: {id: 's_c', title: 'select and compare'}">
-          <ul>
-            {{#foreach:headings.headings}}
-              <li>
-                {{name}}
-              </li>
-            {{/foreach}}  
-          </u1>
-          <span click={{products.refresh}}>refresh</span>
-
-          {{#component:{name:'platinum-category', params:products}/}}
-          {{#component:{name:'platinum-category', params:products}/}}
-          {{#component:{name:'platinum-category', params:products}/}}
+        <div data-bind="page: {id: 'enquiry', title: 'enquiry'}">
+            {{#component:{name:'enquiry'}/}}
+        </div>
+        <div data-bind="page: {id: 'sales-exec', title: 'sales-exec'}">
+            {{#component:{name:'sales-exec'}/}}
+        </div>
+        <div data-bind="page: {id: 'dealer', title: 'dealer'}">
+            {{#component:{name:'dealer'}/}}
+        </div>
+        <div data-bind="page: {id: 'offer', params:['sbvid'], title: 'offer'}">
+          {{#component: {name:'offer', params:sbvid}/}}
           
         </div>
       </div>     

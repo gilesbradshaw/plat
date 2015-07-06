@@ -8,6 +8,6 @@ var fields = {
 	created: { type: Date, default: Date.now }
 };
 
-var sbvSchema = new Schema(fields);
+var schema = new Schema(fields);
 
-module.exports = mongoose.model('Sbv', sbvSchema);
+module.exports = mongoose.model('Dealer', schema);

@@ -1,8 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var fields = {
     category: { type: String },
@@ -10,6 +9,6 @@ var fields = {
 	created: { type: Date, default: Date.now }
 };
 
-var productSchema = new Schema(fields);
+var schema = new Schema(fields);
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product', schema);

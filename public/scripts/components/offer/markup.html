@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs" data-bind="foreach: $page.children">
+<li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
+</ul>
+<div data-bind="page: {id: 'accessorize', title: 'accessorize'}">
+  accessorize
+</div>
+
+<div data-bind="page: {id: 'warranty', title: 'warranty'}">
+warranty
+</div>
+<div data-bind="page: {id: 's_c', title: 'select and compare'}">
+<ul>
+  {{#foreach:headings.headings}}
+    <li>
+      {{name}}
+    </li>
+  {{/foreach}}  
+</u1>
+<span click={{products.refresh}}>refresh</span>
+{{#component:{name:'platinum-compare-and-select', params:sbv}/}}
+
+</div>

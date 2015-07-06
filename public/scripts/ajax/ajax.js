@@ -1,34 +1,17 @@
 'use strict';
-//headings view model - fetches headings for products - what each row represents.
 
 define([
-    'jquery'
-], function($){
+    'jquery',
+    'ajax.sbv',
+    'ajax.enquiry',
+    'ajax.sales-exec',
+    'ajax.dealer'
+], function($, sbv, enquiry, salesExec, dealer){
     return {
-        sbv: {
-            get: function(sbvid){
-                return $.ajax({
-                    method: 'GET',
-                    contentType: 'application/json',
-                    url: '/api/sbv/' + sbvid
-                });
-            },
-            list: function(){
-                return $.ajax({
-                    method: 'GET',
-                    contentType: 'application/json',
-                    url: '/api/sbvs'
-                });
-            },
-            post: function(sbv){
-                return $.ajax({
-                    method: 'POST',
-                    contentType: 'application/json',
-                    url: '/api/sbv',
-                    data: JSON.stringify(sbv)
-                });
-            }
-        },
+        enquiry: enquiry,
+        sbv: sbv,
+        salesExec: salesExec,
+        dealer: dealer,
         headings: {
             post: function(){
                 return $.ajax({
@@ -40,11 +23,11 @@ define([
             }
         },
         products: {
-            post: function(sbv){
+            post: function(product){
                 return $.ajax({
                     method: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify(sbv),
+                    data: JSON.stringify(product),
                     url: 'api/products'
                 });
             }

@@ -1,8 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose');
-		var Schema = mongoose.Schema,
-		ObjectId = Schema.ObjectId;
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
 var fields = {
     title: { type: String },
@@ -12,9 +12,8 @@ var fields = {
             type: ObjectId,
             ref: 'Product'
         }
-
 };
 
-var parameterSchema = new Schema(fields);
+var schema = new Schema(fields);
 
-module.exports = mongoose.model('Parameter', parameterSchema);
+module.exports = mongoose.model('Parameter', schema);
