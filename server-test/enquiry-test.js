@@ -36,11 +36,34 @@ describe('enquiry', function() {
                 });
             });
         });
+        describe('list by dealer', function(){
+            beforeEach(function(){
+                tools.ajaxInjected.enquiry = {listByDealer: tools.ajax};
+            });
+            it('should get enquiries', function(done){
+                var model = new Model({dealer: 'dealer'});
+                assert(!tools.ajax.calledOnce, 'no ajax call on create');
+                assert(model.refresh() === model);
+                assert(tools.ajax.calledOnce, 'ajax call on refresh');
+                assert(tools.ajax.args[0][0] === 'dealer', 'dealer id sent to ajax');
+                tools.ajaxPromise.resolve('enquiries');
+                tools.ajaxPromise.promise.then(function(){
+                    assert(model.items() === 'enquiries', 'enquiries set');
+                    done();
+                });
+            });
+        });
+
         describe('new', function(){
             it('should make a new enquiry', function(){
                 var model = new Model();
                 model.new('enquiry');
                 assert(model.item().title() === undefined, 'new enquiry created');
+            });
+            it('should make a new enquiry with a dealer', function(){
+                var model = new Model({dealer: 'dealer'});
+                model.new('enquiry');
+                assert(model.item().dealer === 'dealer', 'new enquiry created with dealer');
             });
         });
         describe('get', function(){
@@ -70,11 +93,13 @@ describe('enquiry', function() {
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
                 model.post(function(){
                     return {
-                        title: function(){return 'enquiry'; }
+                        title: function(){return 'enquiry'; },
+                        dealer: 'dealer'
                     };
                 })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
                 assert(tools.ajax.args[0][0].title === 'enquiry');
+                assert(tools.ajax.args[0][0].dealer === 'dealer');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('enquiry!');
                 tools.ajaxPromise.promise.then(function(){

@@ -10,20 +10,30 @@ define([
         this.items = ko.observableArray();
     };
     SalesExec.prototype.new = function(){
-        this.item({title: ko.observable()});
+        this.item({dealer: this.params ? this.params.dealer : undefined, title: ko.observable()});
     };
     SalesExec.prototype.refresh = function(){
         var self = this;
-        ajax.salesExec.list()
-            .then(function(items){
-                self.items(items);
-            });
+        if(this.params && this.params.dealer)
+        {
+            ajax.salesExec.listByDealer(this.params.dealer)
+                .then(function(items){
+                    self.items(items);
+                });
+        }
+        else
+        {
+            ajax.salesExec.list()
+                .then(function(items){
+                    self.items(items);
+                });
+        }
         return this;
     };
     SalesExec.prototype.post = function(item){
         var self = this;
         return function(){
-            ajax.salesExec.post({title: item().title()})
+            ajax.salesExec.post({dealer: item().dealer, title: item().title()})
                 .then(function(posted){
                     self.item(posted);
                     self.refresh();

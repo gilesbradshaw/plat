@@ -11,20 +11,30 @@ define([
         this.items = ko.observableArray();
     };
     Enquiry.prototype.new = function(){
-        this.item({title: ko.observable()});
+        this.item({dealer: this.params ? this.params.dealer : undefined, title: ko.observable()});
     };
     Enquiry.prototype.refresh = function(){
         var self = this;
-        ajax.enquiry.list()
-            .then(function(items){
-                self.items(items);
-            });
+        if(this.params && this.params.dealer)
+        {
+            ajax.enquiry.listByDealer(this.params.dealer)
+                .then(function(items){
+                    self.items(items);
+                });
+        }
+        else
+        {
+            ajax.enquiry.list()
+                .then(function(items){
+                    self.items(items);
+                });
+        }
         return this;
     };
     Enquiry.prototype.post = function(item){
         var self = this;
         return function(){
-            ajax.enquiry.post({title: item().title()})
+            ajax.enquiry.post({dealer: item().dealer, title: item().title()})
                 .then(function(posted){
                     self.item(posted);
                     self.refresh();

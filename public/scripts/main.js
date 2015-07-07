@@ -11,6 +11,8 @@ requirejs.config({
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
         pager: '/bower_components/pagerjs/pager',
 
+        'custom-bindings.defaultPage': '/scripts/custom-bindings/defaultPage',
+
         'app.platinum.Offer': '/scripts/platinum/Offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',
@@ -18,7 +20,11 @@ requirejs.config({
         'ajax.sbv': '/scripts/ajax/sbv/ajax',
         'ajax.enquiry': '/scripts/ajax/enquiry/ajax',
         'ajax.sales-exec': '/scripts/ajax/sales-exec/ajax',
-        'ajax.dealer': '/scripts/ajax/dealer/ajax'
+        'ajax.dealer': '/scripts/ajax/dealer/ajax',
+        'ajax.category': '/scripts/ajax/category/ajax',
+        'ajax.product': '/scripts/ajax/product/ajax',
+        'ajax.parameter': '/scripts/ajax/parameter/ajax',
+        'ajax.item': '/scripts/ajax/item/ajax'
     }
 });
 
@@ -28,7 +34,8 @@ define(
     [
         'knockout',
         'pager',
-        'knockout.punches'
+        'knockout.punches',
+        'custom-bindings.defaultPage'
     ], function(ko, pager){
 
     //register knockout components
@@ -48,6 +55,22 @@ define(
         viewModel: { require: 'components/dealer/viewModel' },
         template: { require: 'text!components/dealer/markup.html' }
     });
+    ko.components.register('category', {
+        viewModel: { require: 'components/category/viewModel' },
+        template: { require: 'text!components/category/markup.html' }
+    });
+    ko.components.register('product', {
+        viewModel: { require: 'components/product/viewModel' },
+        template: { require: 'text!components/product/markup.html' }
+    });
+    ko.components.register('parameter', {
+        viewModel: { require: 'components/parameter/viewModel' },
+        template: { require: 'text!components/parameter/parameter.html' }
+    });
+    ko.components.register('item', {
+        viewModel: { require: 'components/item/viewModel' },
+        template: { require: 'text!components/item/item.html' }
+    });
     ko.components.register('offer', {
         viewModel: { require: 'components/offer/viewModel' },
         template: { require: 'text!components/offer/markup.html' }
@@ -60,7 +83,6 @@ define(
     pager.extendWithPage(offer);
     ko.applyBindings(offer);
     pager.start();
-
 });
 
 

@@ -1,52 +1,113 @@
 'use strict';
-
 module.exports = function(app) {
   // Module dependencies.
-  var mongoose = require('mongoose');
+    var mongoose = require('mongoose');
+    var Item = mongoose.models.Parameter,
+    api = {};
 
-  var Parameter = mongoose.models.Parameter,
-  Product = mongoose.models.Product,
-  api = {};
+  // ALL
+  api.list = function (req, res) {
+    Item.find(function(err, items) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.json(items);
+      }
+    });
+  };
 
-  api.parameters = function (req, res) {
-    Parameter
-      .find({'product': new mongoose.Types.ObjectId(req.param('product'))})
+  api.listByProduct = function (req, res) {
+    Item
+      .find({'product': new mongoose.Types.ObjectId(req.param('id'))})
       .then(
-        function(parameters){
-          res.json(parameters);
+        function(items){
+          res.json(items);
         }
       ).catch(function(err){
         res.status(500).json(err);
       });
   };
 
-// POST
-  api.addParameter = function (req, res) {
-    var parameter;
-    if(typeof req.body === 'undefined'){
-      return res.status(500).json({message: 'parameter is undefined'});
-    }
-    Product.findById(req.param('product')).then(
-      function(product){
-        parameter = new Parameter(req.body);
-        console.log(req.param('product'));
-        parameter.product = product;
 
-        parameter.save(function (err) {
-          if (!err) {
-            res.status(201).json(parameter.toObject());
-          } else {
-             res.status(500).json(err);
-          }
-        });
-        }
-      )
-    .catch(function(err){
-        res.status(500).json(err);
+  // GET
+  api.get = function (req, res) {
+    var id = req.params.id;
+    Item.findOne({ '_id': id }, function(err, item) {
+      if (err) {
+        res.status(404).json(err);
+      } else {
+        res.status(200).json(item);
+      }
     });
   };
 
+  // POST
+  api.add = function (req, res) {
+    var item;
+    if(typeof req.body === 'undefined'){
+      return res.status(500).json({message: 'undefined'});
+    }
 
-  app.get('/api/parameters/:product', api.parameters);
-  app.post('/api/parameters/:product', api.addParameter);
+    item = new Item(req.body);
+    item.save(function (err) {
+      if (!err) {
+        return res.status(201).json(item.toObject());
+      } else {
+         return res.status(500).json(err);
+      }
+    });
+  };
+
+  // PUT
+  api.edit = function (req, res) {
+    var id = req.params.id;
+
+    Item.findById(id, function (err, item) {
+      if (err) {
+        res.status(500).json(err);
+      }
+      if(typeof req.body.title !== 'undefined'){
+        item.title = req.body.title;
+      }
+
+      if(typeof req.body.created !== 'undefined'){
+        item.created = req.body.created;
+      }
+
+      return item.save(function (saveErr) {
+        if (!saveErr) {
+          return res.status(200).json(item.toObject());
+        } else {
+         return res.status(200).json(saveErr);
+        }
+        return res.json(item);
+      });
+    });
+
+  };
+
+  // DELETE
+  api.delete = function (req, res) {
+    var id = req.params.id;
+    Item.findById(id, function (err, item) {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      return item.remove(function (deleteErr) {
+        if (!deleteErr) {
+          return res.sendStatus(204);
+        } else {
+          return res.status(500).json(deleteErr);
+        }
+      });
+    });
+
+  };
+
+  app.get('/api/product/:id/parameters', api.listByProduct);
+  app.get('/api/parameters', api.list);
+  app.get('/api/parameter/:id', api.get);
+  app.post('/api/parameter', api.add);
+  app.put('/api/parameter/:id', api.edit);
+  app.delete('/api/parameter/:id', api.delete);
 };

@@ -1,3 +1,3 @@
-#sales exec component
+#dealer component
 
-crud sales exec functions
+crud dealer functions

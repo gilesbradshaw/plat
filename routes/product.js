@@ -1,91 +1,113 @@
 'use strict';
-
 module.exports = function(app) {
   // Module dependencies.
-  var mongoose = require('mongoose');
-
-  var Product = mongoose.models.Product, api = {};
+    var mongoose = require('mongoose');
+    var Item = mongoose.models.Product,
+    api = {};
 
   // ALL
-  //unorthodox - we are posting car/customer to get the list
-  api.products = function (req, res) {
-    Product
-      .find()
+  api.list = function (req, res) {
+    Item.find(function(err, items) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.json(items);
+      }
+    });
+  };
+
+  api.listByCategory = function (req, res) {
+    Item
+      .find({'category': new mongoose.Types.ObjectId(req.param('id'))})
       .then(
-        function(products){
-          res.json(products);
+        function(items){
+          res.json(items);
         }
       ).catch(function(err){
         res.status(500).json(err);
       });
   };
 
-   //unorthodox - we are posting car/customer to get an item
-  api.product = function (req, res) {
-    Product.findById(req.body._id)
-      .then(function(product){
-        res.status(200).json(product);
-      }).catch(function(err){
+
+  // GET
+  api.get = function (req, res) {
+    var id = req.params.id;
+    Item.findOne({ '_id': id }, function(err, item) {
+      if (err) {
         res.status(404).json(err);
-      });
+      } else {
+        res.status(200).json(item);
+      }
+    });
   };
 
-  // PUT unorthodoc this will add or update a product
-  api.editProduct = function (req, res) {
+  // POST
+  api.add = function (req, res) {
+    var item;
     if(typeof req.body === 'undefined'){
-      return res.status(500).json({message: 'product is undefined'});
+      return res.status(500).json({message: 'undefined'});
     }
-    Product.findById(req.body.id)
-    .then(function(product){
+
+    item = new Item(req.body);
+    item.save(function (err) {
+      if (!err) {
+        return res.status(201).json(item.toObject());
+      } else {
+         return res.status(500).json(err);
+      }
+    });
+  };
+
+  // PUT
+  api.edit = function (req, res) {
+    var id = req.params.id;
+
+    Item.findById(id, function (err, item) {
+      if (err) {
+        res.status(500).json(err);
+      }
       if(typeof req.body.title !== 'undefined'){
-        product.title = req.body.title;
+        item.title = req.body.title;
       }
 
       if(typeof req.body.created !== 'undefined'){
-        product.created = req.body.created;
+        item.created = req.body.created;
       }
 
-      return product.save(function (err) {
-        if (!err) {
-          return res.status(200).json(product.toObject());
+      return item.save(function (saveErr) {
+        if (!saveErr) {
+          return res.status(200).json(item.toObject());
         } else {
-         return res.status(200).json(err);
+         return res.status(200).json(saveErr);
         }
-      });
-    }).catch(function(){
-      var product = new Product(req.body);
-
-      product.save(function (err) {
-        if (!err) {
-          console.log('created product');
-          return res.status(201).json(product.toObject());
-        } else {
-           return res.status(500).json(err);
-        }
+        return res.json(item);
       });
     });
-  };
 
+  };
 
   // DELETE
-  api.deleteProduct = function (req, res) {
+  api.delete = function (req, res) {
     var id = req.params.id;
-    Product.findById(id)
-      .then(function (product) {
-        return product.remove(function (err) {
-          if (!err) {
-            return res.sendStatus(204);
-          } else {
-            console.log(err);
-            return res.status(500).json(err);
-          }
-        });
+    Item.findById(id, function (err, item) {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      return item.remove(function (deleteErr) {
+        if (!deleteErr) {
+          return res.sendStatus(204);
+        } else {
+          return res.status(500).json(deleteErr);
+        }
+      });
     });
+
   };
 
-
-  app.post('/api/products', api.products);
-  app.post('/api/product', api.product);
-  app.put('/api/product', api.editProduct);
-  app.delete('/api/product', api.deleteProduct);
+  app.get('/api/category/:id/products', api.listByCategory);
+  app.get('/api/products', api.list);
+  app.get('/api/product/:id', api.get);
+  app.post('/api/product', api.add);
+  app.put('/api/product/:id', api.edit);
+  app.delete('/api/product/:id', api.delete);
 };

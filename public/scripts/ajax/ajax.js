@@ -5,13 +5,21 @@ define([
     'ajax.sbv',
     'ajax.enquiry',
     'ajax.sales-exec',
-    'ajax.dealer'
-], function($, sbv, enquiry, salesExec, dealer){
+    'ajax.dealer',
+    'ajax.category',
+    'ajax.product',
+    'ajax.parameter',
+    'ajax.item'
+], function($, sbv, enquiry, salesExec, dealer, category, product, parameter, item){
     return {
         enquiry: enquiry,
         sbv: sbv,
         salesExec: salesExec,
         dealer: dealer,
+        category: category,
+        product: product,
+        parameter: parameter,
+        item: item,
         headings: {
             post: function(){
                 return $.ajax({
@@ -32,7 +40,7 @@ define([
                 });
             }
         },
-        product: {
+        product_: {
             post: function(product){
                 return $.ajax({
                     method: 'POST',

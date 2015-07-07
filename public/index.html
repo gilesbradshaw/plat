@@ -30,28 +30,27 @@
     <div style='display:none' data-bind='attr:{style:"display:block"}'>
       <div data-bind="page: {id: 'start', title: 'plat demo'}">
         <ul class="nav nav-tabs" data-bind="foreach: $page.children">
-          <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
+          {{#if:$data.val('isMenu')}}
+            <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
+          {{/if}}
         </ul>
-        <div data-bind="page: {id: 'sbv', title: 'sbv'}">
-            {{#component:{name:'sbv'}/}}
-        </div>
-        <div data-bind="page: {id: 'enquiry', title: 'enquiry'}">
-            {{#component:{name:'enquiry'}/}}
-        </div>
-        <div data-bind="page: {id: 'sales-exec', title: 'sales-exec'}">
-            {{#component:{name:'sales-exec'}/}}
-        </div>
-        <div data-bind="page: {id: 'dealer', title: 'dealer'}">
-            {{#component:{name:'dealer'}/}}
-        </div>
-        <div data-bind="page: {id: 'offer', params:['sbvid'], title: 'offer'}">
-          {{#component: {name:'offer', params:sbvid}/}}
-          
+        {{#component:{name:'category'}/}}
+        {{#component:{name:'product'}/}}
+        {{#component:{name:'parameter'}/}}
+        {{#component:{name:'item'}/}}
+        {{#component:{name:'sbv'}/}}
+        {{#component:{name:'enquiry'}/}}
+        {{#component:{name:'sales-exec'}/}}
+        {{#component:{name:'dealer'}/}}
+        <div data-bind="page: {id: 'offer', params:['sbvid'], title: 'offer', isMenu: true}">
+          {{#if:$page.isVisible}}
+              {{#component: {name:'offer', params:sbvid}/}}          
+          {{/if}}
         </div>
       </div>     
    </div>
     <div class="footer">
-      <p>♥ from giles</p>
+      <p>giles</p>
     </div>
   
         

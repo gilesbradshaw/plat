@@ -1,0 +1,26 @@
+<div data-bind="page: {id: 'product', params:['id'], title: 'product'}">
+    {{#if:$page.isVisible()}}
+        {{#with: get(id())()/}}
+        {{#defaultPage}}
+            {{#with: item}}
+                <a data-bind="page-href:{path: '/start/category', params: {id: category}}">category</a>
+                <a data-bind="page-href:'parameters'">parameters</a>
+                <a data-bind="page-href:'items'">items</a>
+                <a data-bind="page-href:'edit'">edit</a>
+                <div>{{title}}</div>
+            {{/with}}
+            {{#component:{name: 'parameters', params:{product: id()}}/}}
+            {{#component:{name: 'items', params:{product: id()}}/}}
+        {{/defaultPage}}
+        <div data-bind="page: {id: 'edit', title: 'edit product', isMenu:true}">
+            {{#with:item}}
+                <a data-bind='page-href:"../"'>view</a>
+                <label for='product-title'>title</label>
+                <input id='product-title' type='text' value={{title}}>
+            {{/with}}
+            {{#if:item}}
+                <input type='button' click={{put(item)}} value="edit">
+            {{/if}}
+        </div>
+    {{/if}}
+</div>

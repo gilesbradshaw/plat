@@ -1,2 +1,57 @@
-<select value={{category}} options={{params.categories}}/>
-{{#component:{name:'platinum-product', params:$data}/}}
+<div data-bind="page: {id: 'category', params:['id'], title: 'category'}">
+    {{#if:$page.isVisible()}}
+        {{#with: get(id())()/}}
+        {{#defaultPage}}
+            {{#with: item}}
+                <a data-bind="page-href:'edit'">edit</a>
+                <a data-bind="page-href:'products'">products</a>
+                <div>{{title}}</div>
+            {{/with}}
+            {{#component:{name: 'products', params:{category: id()}}/}}
+        {{/defaultPage}}
+        <div data-bind="page: {id: 'edit', title: 'edit category', isMenu:true}">
+            {{#with:item}}
+                <a data-bind='page-href:"../"'>view</a>
+                <label for='category-title'>title</label>
+                <input id='category-title' type='text' value={{title}}>
+            {{/with}}
+            {{#if:item}}
+                <input type='button' click={{put(item)}} value="edit">
+            {{/if}}
+        </div>
+    {{/if}}
+</div>
+<div data-bind="page: {id: 'categories', title: 'categories', isMenu:true}">
+    {{#if:$page.isVisible()}}
+        <div data-bind="page: {id: 'new', title: 'new category'}">
+            {{#if:$page.isVisible()}}
+                {{#with:$data.new()/}}
+                {{#with:item}}
+                    <label for='category-title'>title</label>
+                    <input id='category-title' type='text' value={{title}}>
+                {{/with}}
+                {{#if:item}}
+                    {{#ifnot:item()._id}}
+                        <input type='button' click={{post(item)}} value="add">
+                    {{/ifnot}}
+                    {{#if:item()._id}}
+                        <input type='button' click={{put(item)}} value="edit">
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        </div>
+        {{#defaultPage}}
+            <a data-bind="page-href:'new'">new</a>
+            {{#with:refresh()}}
+                <ul>
+                    {{#foreach:items}}
+                        <li>
+                        <a data-bind='page-href:{path:"../category", params:{id:_id}}'>{{$data.title}}</a>
+                            <input type='button' click={{$parent.delete($data)}} value="delete">
+                        </li>
+                    {{/foreach}}
+                </ul>
+            {{/with}}
+        {{/defaultPage}}
+    {{/if}}
+ </div>

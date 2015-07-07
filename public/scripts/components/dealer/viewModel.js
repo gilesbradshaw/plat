@@ -4,8 +4,17 @@ define([
     'knockout',
     'ajax'
 ], function(ko, ajax){
-   var Dealer = function(params) {
+    ko.components.register('sales-execs', {
+        viewModel: { require: 'components/sales-exec/viewModel' },
+        template: { require: 'text!components/sales-exec/sales-execs.html' }
+    });
+    ko.components.register('enquiries', {
+        viewModel: { require: 'components/enquiry/viewModel' },
+        template: { require: 'text!components/enquiry/enquiries.html' }
+    });
+    var Dealer = function(params) {
         this.params = params;
+        this.id = ko.observable();
         this.item = ko.observable();
         this.items = ko.observableArray();
     };

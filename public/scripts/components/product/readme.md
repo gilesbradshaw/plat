@@ -1,3 +1,3 @@
-#product component
+#enquiry component
 
-Allows selection from a list of products then displays that product
+crud enquiry functions

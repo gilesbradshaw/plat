@@ -19,6 +19,13 @@ define([
                 url: '/api/enquiries'
             });
         },
+        listByDealer: function(id){
+            return $.ajax({
+                method: 'GET',
+                contentType: 'application/json',
+                url: '/api/dealer/' + id + '/enquiries'
+            });
+        },
         post: function(item){
             return $.ajax({
                 method: 'POST',

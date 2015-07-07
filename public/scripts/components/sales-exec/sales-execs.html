@@ -1,0 +1,34 @@
+<div data-bind="page: {id: 'sales-execs', title: 'sales execs', isMenu:true, isSubDefault:true}">
+    {{#if:$page.isVisible()}}
+        <div data-bind="page: {id: 'new', title: 'new sales exec',}">
+            {{#if:$page.isVisible()}}
+                {{#with:$data.new()/}}
+                {{#with:item}}
+                    <label for='sales-exec-title'>title</label>
+                    <input id='sales-exec-title' type='text' value={{title}}>
+                {{/with}}
+                {{#if:item}}
+                    {{#ifnot:item()._id}}
+                        <input type='button' click={{post(item)}} value="add">
+                    {{/ifnot}}
+                    {{#if:item()._id}}
+                        <input type='button' click={{put(item)}} value="edit">
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        </div>
+        {{#defaultPage}}
+            <a data-bind="page-href:'new'">new</a>
+            {{#with:refresh()}}
+                <ul>
+                    {{#foreach:items}}
+                        <li>
+                        <a data-bind='page-href:{path:"/start/sales-exec", params:{id:_id}}'>{{$data.title}}</a>
+                            <input type='button' click={{$parent.delete($data)}} value="delete">
+                        </li>
+                    {{/foreach}}
+                </ul>
+            {{/with}}
+        {{/defaultPage}}
+    {{/if}}
+ </div>

@@ -36,11 +36,33 @@ describe('sales exec', function() {
                 });
             });
         });
+        describe('list by dealer', function(){
+            beforeEach(function(){
+                tools.ajaxInjected.salesExec = {listByDealer: tools.ajax};
+            });
+            it('should get sales execs', function(done){
+                var model = new Model({dealer: 'dealer'});
+                assert(!tools.ajax.calledOnce, 'no ajax call on create');
+                assert(model.refresh() === model);
+                assert(tools.ajax.calledOnce, 'ajax call on refresh');
+                assert(tools.ajax.args[0][0] === 'dealer', 'dealer id sent to ajax');
+                tools.ajaxPromise.resolve('sales execs');
+                tools.ajaxPromise.promise.then(function(){
+                    assert(model.items() === 'sales execs', 'sales execs set');
+                    done();
+                });
+            });
+        });
         describe('new', function(){
             it('should make a new sales exec', function(){
                 var model = new Model();
                 model.new('sales exec');
                 assert(model.item().title() === undefined, 'new sales exec created');
+            });
+            it('should make a new sales exec with a dealer', function(){
+                var model = new Model({dealer: 'dealer'});
+                model.new('sales exec');
+                assert(model.item().dealer === 'dealer', 'new sales exec created with dealer');
             });
         });
         describe('get', function(){
@@ -70,11 +92,13 @@ describe('sales exec', function() {
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
                 model.post(function(){
                     return {
-                        title: function(){return 'sales exec'; }
+                        title: function(){return 'sales exec'; },
+                        dealer: 'dealer'
                     };
                 })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
                 assert(tools.ajax.args[0][0].title === 'sales exec');
+                assert(tools.ajax.args[0][0].dealer === 'dealer');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('sales exec!');
                 tools.ajaxPromise.promise.then(function(){

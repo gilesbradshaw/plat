@@ -16,6 +16,19 @@ module.exports = function(app) {
     });
   };
 
+  api.listByDealer = function (req, res) {
+    Item
+      .find({'dealer': new mongoose.Types.ObjectId(req.param('id'))})
+      .then(
+        function(items){
+          res.json(items);
+        }
+      ).catch(function(err){
+        res.status(500).json(err);
+      });
+  };
+
+
   // GET
   api.get = function (req, res) {
     var id = req.params.id;
@@ -91,7 +104,7 @@ module.exports = function(app) {
 
   };
 
-
+  app.get('/api/dealer/:id/enquiries', api.listByDealer);
   app.get('/api/enquiries', api.list);
   app.get('/api/enquiry/:id', api.get);
   app.post('/api/enquiry', api.add);
