@@ -45,11 +45,11 @@ define(
     });
     ko.components.register('enquiry', {
         viewModel: { require: 'components/enquiry/viewModel' },
-        template: { require: 'text!components/enquiry/markup.html' }
+        template: { require: 'text!components/enquiry/enquiry.html' }
     });
     ko.components.register('sales-exec', {
         viewModel: { require: 'components/sales-exec/viewModel' },
-        template: { require: 'text!components/sales-exec/markup.html' }
+        template: { require: 'text!components/sales-exec/sales-exec.html' }
     });
     ko.components.register('dealer', {
         viewModel: { require: 'components/dealer/viewModel' },
@@ -61,7 +61,7 @@ define(
     });
     ko.components.register('product', {
         viewModel: { require: 'components/product/viewModel' },
-        template: { require: 'text!components/product/markup.html' }
+        template: { require: 'text!components/product/product.html' }
     });
     ko.components.register('parameter', {
         viewModel: { require: 'components/parameter/viewModel' },
