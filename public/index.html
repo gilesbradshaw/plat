@@ -34,6 +34,7 @@
             <li data-bind="css: {active: isVisible}"><a data-bind="text: $data.val('title'), page-href: $data"></a></li>
           {{/if}}
         </ul>
+        {{#component:{name:'auth'}/}}
         {{#component:{name:'category'}/}}
         {{#component:{name:'product'}/}}
         {{#component:{name:'parameter'}/}}

@@ -5,7 +5,9 @@
             {{#with: item}}
                 <a data-bind="page-href:{path: '/start/dealer', params: {id: dealer}}">dealer</a>
                 <a data-bind="page-href:'edit'">edit</a>
+                <a data-bind="page-href:'enquiries'">enquiries</a>
                 <div>{{title}}</div>
+                {{#component:{name: 'enquiries', params:{dealer: dealer}}/}}
             {{/with}}
         {{/defaultPage}}
         <div data-bind="page: {id: 'edit', title: 'new sales exec', isMenu:true}">

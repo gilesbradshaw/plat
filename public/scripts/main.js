@@ -24,7 +24,8 @@ requirejs.config({
         'ajax.category': '/scripts/ajax/category/ajax',
         'ajax.product': '/scripts/ajax/product/ajax',
         'ajax.parameter': '/scripts/ajax/parameter/ajax',
-        'ajax.item': '/scripts/ajax/item/ajax'
+        'ajax.item': '/scripts/ajax/item/ajax',
+        'ajax.auth': '/scripts/ajax/auth/ajax'
     }
 });
 
@@ -39,6 +40,10 @@ define(
     ], function(ko, pager){
 
     //register knockout components
+    ko.components.register('auth', {
+        viewModel: { require: 'components/auth/viewModel' },
+        template: { require: 'text!components/auth/markup.html' }
+    });
     ko.components.register('sbv', {
         viewModel: { require: 'components/sbv/viewModel' },
         template: { require: 'text!components/sbv/markup.html' }
