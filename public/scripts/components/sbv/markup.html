@@ -39,6 +39,9 @@
             {{/if}}
         </div>
         {{#defaultPage}}
+            {{#if:waiting}}
+                <h1>waiting!!!!</h1>
+            {{/if}}
             <a data-bind="page-href:'new'">new</a>
             {{#with:refresh()}}
                 <ul>

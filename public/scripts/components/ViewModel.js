@@ -10,13 +10,16 @@ define(
             this.item = ko.observable();
             this.items = ko.observableArray();
             this.id = ko.observable();
+            this.waiting = ko.observable();
         }
 
         ViewModel.prototype.refresh = function(func){
             var self = this;
+            this.waiting(true);
             (func ? func() : this.ajax.list())
                 .then(function(items){
                     self.items(items);
+                    self.waiting(undefined);
                 });
             return this;
         };
