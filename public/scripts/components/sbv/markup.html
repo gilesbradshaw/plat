@@ -1,5 +1,5 @@
 <div data-bind="page: {id: 'sbv', params:['id'], title: 'sbv'}">
-    {{#if:$page.isVisible()}}
+    {{#if:$page.isVisible() && id()}}
         {{#with: get(id())()/}}
         {{#defaultPage}}
             {{#with: item}}
@@ -9,7 +9,7 @@
         {{/defaultPage}}
         <div data-bind="page: {id: 'edit', title: 'new sbv', isMenu:true}">
             {{#with:item}}
-                 <a data-bind='page-href:"../"'>view</a>
+                <a data-bind='page-href:"../"'>view</a>
                 <label for='sbv-title'>title</label>
                 <input id='sbv-title' type='text' value={{title}}>
             {{/with}}

@@ -1,5 +1,5 @@
 <div data-bind="page: {id: 'parameter', params:['id'], title: 'parameter'}">
-    {{#if:$page.isVisible()}}
+    {{#if:$page.isVisible() && id()}}
         {{#with: get(id())()/}}
         {{#defaultPage}}
             {{#with: item}}

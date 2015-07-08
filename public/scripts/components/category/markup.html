@@ -22,7 +22,7 @@
     {{/if}}
 </div>
 <div data-bind="page: {id: 'categories', title: 'categories', isMenu:true}">
-    {{#if:$page.isVisible()}}
+    {{#if:$page.isVisible() && id()}}
         <div data-bind="page: {id: 'new', title: 'new category'}">
             {{#if:$page.isVisible()}}
                 {{#with:$data.new()/}}
