@@ -1,5 +1,5 @@
 <div data-bind="page: {id: 'category', params:['id'], title: 'category'}">
-    {{#if:$page.isVisible()}}
+    {{#if:$page.isVisible()  && id()}}
         {{#with: get(id())()/}}
         {{#defaultPage}}
             {{#with: item}}
@@ -22,7 +22,7 @@
     {{/if}}
 </div>
 <div data-bind="page: {id: 'categories', title: 'categories', isMenu:true}">
-    {{#if:$page.isVisible() && id()}}
+    {{#if:$page.isVisible()}}
         <div data-bind="page: {id: 'new', title: 'new category'}">
             {{#if:$page.isVisible()}}
                 {{#with:$data.new()/}}

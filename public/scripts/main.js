@@ -16,16 +16,17 @@ requirejs.config({
         'app.platinum.Offer': '/scripts/platinum/Offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',
+
         'ajax': '/scripts/ajax/ajax',
-        'ajax.sbv': '/scripts/ajax/sbv/ajax',
-        'ajax.enquiry': '/scripts/ajax/enquiry/ajax',
-        'ajax.sales-exec': '/scripts/ajax/sales-exec/ajax',
-        'ajax.dealer': '/scripts/ajax/dealer/ajax',
-        'ajax.category': '/scripts/ajax/category/ajax',
-        'ajax.product': '/scripts/ajax/product/ajax',
-        'ajax.parameter': '/scripts/ajax/parameter/ajax',
-        'ajax.item': '/scripts/ajax/item/ajax',
-        'ajax.auth': '/scripts/ajax/auth/ajax'
+        'ajax.sbv': '/scripts/ajax/sbv',
+        'ajax.enquiry': '/scripts/ajax/enquiry',
+        'ajax.sales-exec': '/scripts/ajax/sales-exec',
+        'ajax.dealer': '/scripts/ajax/dealer',
+        'ajax.category': '/scripts/ajax/category',
+        'ajax.product': '/scripts/ajax/product',
+        'ajax.parameter': '/scripts/ajax/parameter',
+        'ajax.item': '/scripts/ajax/item',
+        'ajax.auth': '/scripts/ajax/auth'
     }
 });
 
