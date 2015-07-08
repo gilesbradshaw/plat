@@ -68,13 +68,9 @@ describe('dealer', function() {
             it('should post dealer', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'dealer'; }
-                    };
-                })();
+                model.post(function(){ return 'dealer'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'dealer');
+                assert(tools.ajax.args[0][0] === 'dealer');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('dealer!');
                 tools.ajaxPromise.promise.then(function(){

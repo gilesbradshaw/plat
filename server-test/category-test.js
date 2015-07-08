@@ -68,13 +68,9 @@ describe('category', function() {
             it('should post category', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'category'; }
-                    };
-                })();
+                model.post(function(){ return 'category'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'category');
+                assert(tools.ajax.args[0][0] === 'category');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('category!');
                 tools.ajaxPromise.promise.then(function(){

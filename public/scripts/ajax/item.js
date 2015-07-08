@@ -30,7 +30,7 @@ define([
                 method: 'POST',
                 contentType: 'application/json',
                 url: '/api/item',
-                data: JSON.stringify(item)
+                data: JSON.stringify({product: item.product, title: item.title()})
             });
         },
         put: function(item){

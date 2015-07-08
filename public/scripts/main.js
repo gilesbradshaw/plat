@@ -13,6 +13,7 @@ requirejs.config({
 
         'custom-bindings.defaultPage': '/scripts/custom-bindings/defaultPage',
 
+        'app.component.ViewModel': '/scripts/components/ViewModel',
         'app.platinum.Offer': '/scripts/platinum/Offer',
         'app.platinum.sbv': '/scripts/platinum/sbv',
         'app.platinum.headings': '/scripts/platinum/headings',

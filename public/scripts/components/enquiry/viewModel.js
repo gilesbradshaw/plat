@@ -3,71 +3,28 @@
 
 define([
     'knockout',
-    'ajax'
-], function(ko, ajax){
+    'ajax',
+    'app.component.ViewModel'
+], function(ko, ajax, ViewModel){
    var Enquiry = function(params) {
-        this.params = params;
-        this.item = ko.observable();
-        this.items = ko.observableArray();
+        ViewModel.call(this, params);
+        this.ajax = ajax.enquiry;
     };
+    Enquiry.prototype = new ViewModel();
+
     Enquiry.prototype.new = function(){
         this.item({dealer: this.params ? this.params.dealer : undefined, title: ko.observable()});
     };
+    var refresh = Enquiry.prototype.refresh;
     Enquiry.prototype.refresh = function(){
-        var self = this;
-        if(this.params && this.params.dealer)
-        {
-            ajax.enquiry.listByDealer(this.params.dealer)
-                .then(function(items){
-                    self.items(items);
-                });
-        }
-        else
-        {
-            ajax.enquiry.list()
-                .then(function(items){
-                    self.items(items);
-                });
-        }
-        return this;
-    };
-    Enquiry.prototype.post = function(item){
-        var self = this;
-        return function(){
-            ajax.enquiry.post({dealer: item().dealer, title: item().title()})
-                .then(function(posted){
-                    self.item(posted);
-                    self.refresh();
-                });
-        };
-    };
-    Enquiry.prototype.get = function(id){
-        var self = this;
-        return function(){
-            ajax.enquiry.get(id)
-                .then(function(got){
-                    self.item(got);
-                });
-        };
-    };
-    Enquiry.prototype.put = function(item){
-        var self = this;
-        return function(){
-            ajax.enquiry.put(item())
-                .then(function(put){
-                    self.item(put);
-                    self.refresh();
-                });
-        };
-    };
-    Enquiry.prototype['delete'] = function(id){ /* eslint dot-notation: 0*/
-        var self = this;
-        return function(){
-            ajax.enquiry['delete'](id) /* eslint dot-notation: 0*/
-                .then(function(){
-                    self.refresh();
-                });
-        };
+        return refresh.call(
+            this,
+            this.params && this.params.dealer
+                ? function(){
+                    return this.ajax.listByDealer(this.params.dealer);
+                }.bind(this)
+                : undefined
+        );
     };
     return Enquiry;
 });

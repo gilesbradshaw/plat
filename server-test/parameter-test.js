@@ -91,15 +91,9 @@ describe('parameter', function() {
             it('should post parameter', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'parameter'; },
-                        product: 'product'
-                    };
-                })();
+                model.post(function(){ return 'parameter'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'parameter');
-                assert(tools.ajax.args[0][0].product === 'product');
+                assert(tools.ajax.args[0][0]=== 'parameter');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('parameter!');
                 tools.ajaxPromise.promise.then(function(){

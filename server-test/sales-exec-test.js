@@ -90,15 +90,9 @@ describe('sales exec', function() {
             it('should post sales exec', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'sales exec'; },
-                        dealer: 'dealer'
-                    };
-                })();
+                model.post(function(){ return 'sales exec'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'sales exec');
-                assert(tools.ajax.args[0][0].dealer === 'dealer');
+                assert(tools.ajax.args[0][0] === 'sales exec');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('sales exec!');
                 tools.ajaxPromise.promise.then(function(){

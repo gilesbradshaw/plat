@@ -24,7 +24,7 @@ define([
                 method: 'POST',
                 contentType: 'application/json',
                 url: '/api/sbv',
-                data: JSON.stringify(sbv)
+                data: JSON.stringify({title: sbv.title()})
             });
         },
         put: function(sbv){

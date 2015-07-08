@@ -31,7 +31,7 @@ define([
                 method: 'POST',
                 contentType: 'application/json',
                 url: '/api/sales-exec',
-                data: JSON.stringify(item)
+                data: JSON.stringify({dealer: item.dealer, title: item.title()})
             });
         },
         put: function(item){

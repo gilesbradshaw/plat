@@ -2,71 +2,28 @@
 
 define([
     'knockout',
-    'ajax'
-], function(ko, ajax){
+    'ajax',
+    'app.component.ViewModel'
+], function(ko, ajax, ViewModel){
    var SalesExec = function(params) {
-        this.params = params;
-        this.item = ko.observable();
-        this.items = ko.observableArray();
+        ViewModel.call(this, params);
+        this.ajax = ajax.salesExec;
     };
+    SalesExec.prototype = new ViewModel();
+
     SalesExec.prototype.new = function(){
         this.item({dealer: this.params ? this.params.dealer : undefined, title: ko.observable()});
     };
+    var refresh = SalesExec.prototype.refresh;
     SalesExec.prototype.refresh = function(){
-        var self = this;
-        if(this.params && this.params.dealer)
-        {
-            ajax.salesExec.listByDealer(this.params.dealer)
-                .then(function(items){
-                    self.items(items);
-                });
-        }
-        else
-        {
-            ajax.salesExec.list()
-                .then(function(items){
-                    self.items(items);
-                });
-        }
-        return this;
-    };
-    SalesExec.prototype.post = function(item){
-        var self = this;
-        return function(){
-            ajax.salesExec.post({dealer: item().dealer, title: item().title()})
-                .then(function(posted){
-                    self.item(posted);
-                    self.refresh();
-                });
-        };
-    };
-    SalesExec.prototype.get = function(id){
-        var self = this;
-        return function(){
-            ajax.salesExec.get(id)
-                .then(function(got){
-                    self.item(got);
-                });
-        };
-    };
-    SalesExec.prototype.put = function(item){
-        var self = this;
-        return function(){
-            ajax.salesExec.put(item())
-                .then(function(put){
-                    self.item(put);
-                    self.refresh();
-                });
-        };
-    };
-    SalesExec.prototype['delete'] = function(id){ /* eslint dot-notation: 0*/
-        var self = this;
-        return function(){
-            ajax.salesExec['delete'](id) /* eslint dot-notation: 0*/
-                .then(function(){
-                    self.refresh();
-                });
-        };
+        return refresh.call(
+            this,
+            this.params && this.params.dealer
+                ? function(){
+                    return this.ajax.listByDealer(this.params.dealer);
+                }.bind(this)
+                : undefined
+        );
     };
     return SalesExec;
 });

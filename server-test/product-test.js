@@ -91,15 +91,9 @@ describe('product', function() {
             it('should post product', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'product'; },
-                        category: 'category'
-                    };
-                })();
+                model.post(function(){ return 'product'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'product');
-                assert(tools.ajax.args[0][0].category === 'category');
+                assert(tools.ajax.args[0][0] === 'product');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('product!');
                 tools.ajaxPromise.promise.then(function(){

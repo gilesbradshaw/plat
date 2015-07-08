@@ -91,15 +91,9 @@ describe('enquiry', function() {
             it('should post enquiry', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'enquiry'; },
-                        dealer: 'dealer'
-                    };
-                })();
+                model.post(function(){ return 'enquiry'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'enquiry');
-                assert(tools.ajax.args[0][0].dealer === 'dealer');
+                assert(tools.ajax.args[0][0] === 'enquiry');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('enquiry!');
                 tools.ajaxPromise.promise.then(function(){

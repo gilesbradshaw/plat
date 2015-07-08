@@ -67,13 +67,9 @@ describe('sbv', function() {
             it('should post sbv', function(done){
                 var model = new Model();
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
-                model.post(function(){
-                    return {
-                        title: function(){return 'sbv'; }
-                    };
-                })();
+                model.post(function(){ return 'sbv'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
-                assert(tools.ajax.args[0][0].title === 'sbv');
+                assert(tools.ajax.args[0][0] === 'sbv');
                 assert(model.item() === undefined);
                 tools.ajaxPromise.resolve('sbv!');
                 tools.ajaxPromise.promise.then(function(){
