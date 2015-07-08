@@ -9,7 +9,7 @@ requirejs.config({
         superagent: 'lib/superagent.min',
         knockout: '/bower_components/knockout/dist/knockout.debug',
         'knockout.punches': '/bower_components/knockout.punches/knockout.punches.min',
-        pager: '/bower_components/pagerjs/pager',
+        pager: 'lib/pager',
 
         'custom-bindings.defaultPage': '/scripts/custom-bindings/defaultPage',
 
