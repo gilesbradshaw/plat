@@ -16,6 +16,7 @@ define(
         ViewModel.prototype.refresh = function(func){
             var self = this;
             this.waiting(true);
+            this.items([]);
             (func ? func() : this.ajax.list())
                 .then(function(items){
                     self.items(items);
