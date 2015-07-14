@@ -89,7 +89,6 @@ describe('sales exec', function() {
             });
             it('should post sales exec', function(done){
                 var model = new Model();
-                assert(false);
                 assert(!tools.ajax.calledOnce, 'no ajax call on create');
                 model.post(function(){ return 'sales exec'; })();
                 assert(tools.ajax.calledOnce, 'ajax call on post');
