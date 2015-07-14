@@ -17,6 +17,12 @@ deploy:
   api_key: 90e6a4fc-044f-4d23-a420-801124a84491
   app: gilesbradshaw
 
+addons:
+  sauce_connect:
+    username: "gilesbradshaw"
+    access_key: "35b58bed-00eb-4f1f-98c7-937aa831f118"
+
+
 
 
 
