@@ -30,7 +30,7 @@ describe('Test example.com', function(){
         it('should see the body', function(done) {
             client.getText('p', function(err, p){
                 expect(p).to.have.string(
-                    'for illustrative examples in documents'
+                    'for illustrative examples in documents---'
                 );
                 done();
             });
