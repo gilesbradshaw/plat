@@ -16,7 +16,8 @@
     "sinon": "^1.15.3",
     "squire": "^1.1.8",
     "squirejs": "^0.2.1",
-    "supertest": "latest"
+    "supertest": "latest",
+    "webdriverjs": "^1.7.5"
   },
   "eslintConfig": {
     "env": {
