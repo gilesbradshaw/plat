@@ -10,6 +10,7 @@ node_js:
 script:
     - gulp styles
     - gulp fonts
+    - gulp test
 
 deploy:
   provider: heroku
