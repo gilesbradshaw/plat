@@ -4,6 +4,7 @@ define([
     'jquery',
     'ajax.sbv',
     'ajax.enquiry',
+    'ajax.offer',
     'ajax.sales-exec',
     'ajax.dealer',
     'ajax.category',
@@ -15,6 +16,7 @@ define([
     $,
     sbv,
     enquiry,
+    offer,
     salesExec,
     dealer,
     category,
@@ -25,6 +27,7 @@ define([
 ){
     return {
         enquiry: enquiry,
+        offer: offer,
         sbv: sbv,
         salesExec: salesExec,
         dealer: dealer,

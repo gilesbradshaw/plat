@@ -1,26 +1,6 @@
-<div data-bind="page: {id: 'sbv', params:['id'], title: 'sbv'}">
-    {{#if:$page.isVisible() && id()}}
-        {{#with: get(id())()/}}
-        {{#defaultPage}}
-            {{#with: item}}
-                <a data-bind="page-href:'edit'">edit</a>
-                <div>{{title}}</div>
-            {{/with}}
-        {{/defaultPage}}
-        <div data-bind="page: {id: 'edit', title: 'new sbv', isMenu:true}">
-            {{#with:item}}
-                <a data-bind='page-href:"../"'>view</a>
-                <label for='sbv-title'>title</label>
-                <input id='sbv-title' type='text' value={{title}}>
-            {{/with}}
-            {{#if:item}}
-                <input type='button' click={{put(item)}} value="edit">
-            {{/if}}
-        </div>
-    {{/if}}
-</div>
-<div data-bind="page: {id: 'sbvs', title: 'sbvs', isMenu:true}">
+<div data-bind="page: {id: 'sbvs', title: 'sbvs', isMenu:true, isSubDefault:true}">
     {{#if:$page.isVisible()}}
+        <h1>{{params.offer}}</h1>
         <div data-bind="page: {id: 'new', title: 'new sbv'}">
             {{#if:$page.isVisible()}}
                 {{#with:$data.new()/}}
@@ -39,15 +19,12 @@
             {{/if}}
         </div>
         {{#defaultPage}}
-            {{#if:waiting}}
-                <h1>waiting!!!!</h1>
-            {{/if}}
             <a data-bind="page-href:'new'">new</a>
             {{#with:refresh()}}
                 <ul>
                     {{#foreach:items}}
                         <li>
-                        <a data-bind='page-href:{path:"../sbv", params:{id:_id}}'>{{$data.title}}</a>
+                        <a data-bind='page-href:{path:"/start/offer", params:{id:_id}}'>{{$data.title}}</a>
                             <input type='button' click={{$parent.delete($data)}} value="delete">
                         </li>
                     {{/foreach}}

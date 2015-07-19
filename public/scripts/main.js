@@ -21,6 +21,7 @@ requirejs.config({
         'ajax': '/scripts/ajax/ajax',
         'ajax.sbv': '/scripts/ajax/sbv',
         'ajax.enquiry': '/scripts/ajax/enquiry',
+        'ajax.offer': '/scripts/ajax/offer',
         'ajax.sales-exec': '/scripts/ajax/sales-exec',
         'ajax.dealer': '/scripts/ajax/dealer',
         'ajax.category': '/scripts/ajax/category',
@@ -46,13 +47,21 @@ define(
         viewModel: { require: 'components/auth/viewModel' },
         template: { require: 'text!components/auth/markup.html' }
     });
+    ko.components.register('auth.me', {
+        viewModel: { require: 'components/auth/viewModel' },
+        template: { require: 'text!components/auth/me.html' }
+    });
     ko.components.register('sbv', {
         viewModel: { require: 'components/sbv/viewModel' },
-        template: { require: 'text!components/sbv/markup.html' }
+        template: { require: 'text!components/sbv/sbv.html' }
     });
     ko.components.register('enquiry', {
         viewModel: { require: 'components/enquiry/viewModel' },
         template: { require: 'text!components/enquiry/enquiry.html' }
+    });
+    ko.components.register('offer', {
+        viewModel: { require: 'components/offer/viewModel' },
+        template: { require: 'text!components/offer/offer.html' }
     });
     ko.components.register('sales-exec', {
         viewModel: { require: 'components/sales-exec/viewModel' },
@@ -77,10 +86,6 @@ define(
     ko.components.register('item', {
         viewModel: { require: 'components/item/viewModel' },
         template: { require: 'text!components/item/item.html' }
-    });
-    ko.components.register('offer', {
-        viewModel: { require: 'components/offer/viewModel' },
-        template: { require: 'text!components/offer/markup.html' }
     });
 
     ko.punches.enableAll();

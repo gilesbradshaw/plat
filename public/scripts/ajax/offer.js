@@ -5,48 +5,48 @@ define([
     'jquery'
 ], function($){
     return {
-        get: function(sbvid){
+        get: function(id){
             return $.ajax({
                 method: 'GET',
                 contentType: 'application/json',
-                url: '/api/sbv/' + sbvid
+                url: '/api/offer/' + id
             });
         },
         list: function(){
             return $.ajax({
                 method: 'GET',
                 contentType: 'application/json',
-                url: '/api/sbvs'
+                url: '/api/offers'
             });
         },
-        listByOffer: function(id){
+        listByEnquiry: function(id){
             return $.ajax({
                 method: 'GET',
                 contentType: 'application/json',
-                url: '/api/offer/' + id + '/sbvs'
+                url: '/api/enquiry/' + id + '/offers'
             });
         },
         post: function(item){
             return $.ajax({
                 method: 'POST',
                 contentType: 'application/json',
-                url: '/api/sbv',
-                data: JSON.stringify({offer: item.offer, title: item.title()})
+                url: '/api/offer',
+                data: JSON.stringify({enquiry: item.enquiry, title: item.title()})
             });
         },
-        put: function(sbv){
+        put: function(item){
             return $.ajax({
                 method: 'PUT',
                 contentType: 'application/json',
-                url: '/api/sbv/' + sbv._id,
-                data: JSON.stringify(sbv)
+                url: '/api/offer/' + item._id,
+                data: JSON.stringify(item)
             });
         },
-        'delete': function(sbv){
+        'delete': function(item){
             return $.ajax({
                 method: 'DELETE',
                 contentType: 'application/json',
-                url: '/api/sbv/' + sbv._id
+                url: '/api/offer/' + item._id
             });
         }
     };

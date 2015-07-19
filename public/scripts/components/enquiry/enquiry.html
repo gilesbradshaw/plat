@@ -4,13 +4,16 @@
         {{#defaultPage}}
             {{#with: item}}
                 <a data-bind="page-href:{path: '/start/dealer', params: {id: dealer}}">dealer</a>
+                <a data-bind="page-href:'offers'">offers</a>
                 <a data-bind="page-href:'edit'">edit</a>
                 <div>{{title}}</div>
+                
             {{/with}}
+            {{#component: {name: 'offers', params: {enquiry: id()}}/}}
         {{/defaultPage}}
         <div data-bind="page: {id: 'edit', title: 'new enquiry', isMenu:true}">
 
-            {{#with:item}}
+            {{#with: item}}
                  <a data-bind='page-href:"../"'>view</a>
                 <label for='enquiry-title'>title</label>
                 <input id='enquiry-title' type='text' value={{title}}>

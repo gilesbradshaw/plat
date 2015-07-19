@@ -7,10 +7,6 @@ var ObjectId = mongoose.Schema.ObjectId;
 var fields = {
 	title: { type: String },
 	created: { type: Date, default: Date.now },
-    sbv: {
-        type: ObjectId,
-        ref: 'Sbv'
-    },
     enquiry: {
         type: ObjectId,
         ref: 'Enquiry'

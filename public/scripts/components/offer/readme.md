@@ -1,3 +1,3 @@
-#sbv component
+#enquiry component
 
-crud sbv functions
+crud enquiry functions

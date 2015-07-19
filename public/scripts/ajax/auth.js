@@ -15,6 +15,19 @@ define([
                 }),
                 url: '/auth/signin'
             });
+        },
+        signout: function(){
+            return $.ajax({
+                method: 'GET',
+                url: '/auth/signout'
+            });
+        },
+        get: function(){
+            return $.ajax({
+                method: 'GET',
+                //contentType: 'application/json',
+                url: '/auth/me'
+            });
         }
     };
 });

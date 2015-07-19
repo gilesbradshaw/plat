@@ -157,6 +157,7 @@ gulp.task('serve:test', () => {
         '/node_modules': 'node_modules',
         '/public': 'public',
         '/test': 'test',
+        '/server-test': 'server-test',
       }
     }
   });

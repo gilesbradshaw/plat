@@ -26,11 +26,17 @@ module.exports = function(app) {
     },
     signout: function(req, res) {
       req.logout();
-      res.redirect('/');
+    },
+    /**
+ * Send User
+ */
+    me: function(req, res) {
+      res.json(req.user || null);
     }
   };
 
 
+  app.route('/auth/me').get(users.me);
   app.route('/auth/signin').post(users.signin);
   app.route('/auth/signout').get(users.signout);
 

@@ -5,7 +5,7 @@ define([
     'ajax',
     'app.component.ViewModel'
 ], function(ko, ajax, ViewModel){
-        ko.components.register('sales-execs', {
+    ko.components.register('sales-execs', {
         viewModel: { require: 'components/sales-exec/viewModel' },
         template: { require: 'text!components/sales-exec/sales-execs.html' }
     });

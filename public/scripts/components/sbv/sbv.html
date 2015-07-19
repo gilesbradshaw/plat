@@ -1,0 +1,22 @@
+<div data-bind="page: {id: 'sbv', params:['id'], title: 'sbv'}">
+    {{#if:$page.isVisible() && id()}}
+        {{#with: get(id())()/}}
+        {{#defaultPage}}
+            {{#with: item}}
+                <a data-bind="page-href:{path: '/start/offer', params: {id: offer}}">offer</a>
+                <a data-bind="page-href:'edit'">edit</a>
+                <div>{{title}}</div>
+            {{/with}}
+        {{/defaultPage}}
+        <div data-bind="page: {id: 'edit', title: 'edit sbv', isMenu:true}">
+            {{#with:item}}
+                 <a data-bind='page-href:"../"'>view</a>
+                <label for='sbv-title'>title</label>
+                <input id='sbv-title' type='text' value={{title}}>
+            {{/with}}
+            {{#if:item}}
+                <input type='button' click={{put(item)}} value="edit">
+            {{/if}}
+        </div>
+    {{/if}}
+</div>

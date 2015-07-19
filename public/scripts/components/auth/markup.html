@@ -1,15 +1,14 @@
 <div data-bind="page: {id: 'signin', title: 'sign in', isMenu: true}">
     {{#if:$page.isVisible()}}
-        {{#with:user}}
-            <div>
-                {{title}}
-            </div>
-        {{/with}}
+        {{#with: $data.get()/}}
         {{#with: $data.new()/}}
         {{#with:item}}
             <input type='text' value={{username}}>
             <input type='password' value={{password}}>
         {{/with}}
         <input type='button' value='sign in' click={{signin}}>
+        {{#if:user}}
+            <input type='button' value='sign out' click={{signout}}>
+        {{/if}}
     {{/if}}
 </div>

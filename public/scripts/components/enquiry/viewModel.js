@@ -6,7 +6,13 @@ define([
     'ajax',
     'app.component.ViewModel'
 ], function(ko, ajax, ViewModel){
-   var Enquiry = function(params) {
+
+    ko.components.register('offers', {
+        viewModel: { require: 'components/offer/viewModel' },
+        template: { require: 'text!components/offer/offers.html' }
+    });
+
+    var Enquiry = function(params) {
         ViewModel.call(this, params);
         this.ajax = ajax.enquiry;
     };

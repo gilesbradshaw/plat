@@ -2,7 +2,7 @@
 module.exports = function(app) {
   // Module dependencies.
     var mongoose = require('mongoose');
-    var Item = mongoose.models.Sbv,
+    var Item = mongoose.models.Offer,
     api = {};
 
   // ALL
@@ -15,9 +15,10 @@ module.exports = function(app) {
       }
     });
   };
-  api.listByOffer = function (req, res) {
+
+  api.listByEnquiry = function (req, res) {
     Item
-      .find({'offer': new mongoose.Types.ObjectId(req.param('id'))})
+      .find({'enquiry': new mongoose.Types.ObjectId(req.param('id'))})
       .then(
         function(items){
           res.json(items);
@@ -26,7 +27,6 @@ module.exports = function(app) {
         res.status(500).json(err);
       });
   };
-
   // GET
   api.get = function (req, res) {
     var id = req.params.id;
@@ -102,11 +102,10 @@ module.exports = function(app) {
 
   };
 
-
-  app.get('/api/sbvs', api.list);
-  app.get('/api/offer/:id/sbvs', api.listByOffer);
-  app.get('/api/sbv/:id', api.get);
-  app.post('/api/sbv', api.add);
-  app.put('/api/sbv/:id', api.edit);
-  app.delete('/api/sbv/:id', api.delete);
+  app.get('/api/enquiry/:id/offers', api.listByEnquiry);
+  app.get('/api/offers', api.list);
+  app.get('/api/offer/:id', api.get);
+  app.post('/api/offer', api.add);
+  app.put('/api/offer/:id', api.edit);
+  app.delete('/api/offer/:id', api.delete);
 };

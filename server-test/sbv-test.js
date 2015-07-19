@@ -35,11 +35,33 @@ describe('sbv', function() {
                 });
             });
         });
+        describe('list by offer', function(){
+            beforeEach(function(){
+                tools.ajaxInjected.sbv = {listByOffer: tools.ajax};
+            });
+            it('should get sbvs', function(done){
+                var model = new Model({offer: 'sbv'});
+                assert(!tools.ajax.calledOnce, 'no ajax call on create');
+                assert(model.refresh() === model);
+                assert(tools.ajax.calledOnce, 'ajax call on refresh');
+                assert(tools.ajax.args[0][0] === 'sbv', 'sbv id sent to ajax');
+                tools.ajaxPromise.resolve('sbvs');
+                tools.ajaxPromise.promise.then(function(){
+                    assert(model.items() === 'sbvs', 'sbvs set');
+                    done();
+                });
+            });
+        });
         describe('new', function(){
             it('should make a new sbv', function(){
                 var model = new Model();
                 model.new('sbv');
                 assert(model.item().title() === undefined, 'new sbv created');
+            });
+            it('should make a new sbv with an offer', function(){
+                var model = new Model({offer: 'offer'});
+                model.new('sbv');
+                assert(model.item().offer === 'offer', 'new sbv created with offer');
             });
         });
         describe('get', function(){
@@ -118,3 +140,4 @@ describe('sbv', function() {
         });
     });
 });
+

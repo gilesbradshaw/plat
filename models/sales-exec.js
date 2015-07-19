@@ -6,6 +6,7 @@ var ObjectId = mongoose.Schema.ObjectId;
 
 var fields = {
 	title: { type: String },
+    password: { type: String },
 	created: { type: Date, default: Date.now },
     dealer: {
         type: ObjectId,
