@@ -1,6 +1,5 @@
 <div data-bind="page: {id: 'sbvs', title: 'sbvs', isMenu:true, isSubDefault:true}">
     {{#if:$page.isVisible()}}
-        <h1>{{params.offer}}</h1>
         <div data-bind="page: {id: 'new', title: 'new sbv'}">
             {{#if:$page.isVisible()}}
                 {{#with:$data.new()/}}
@@ -24,7 +23,7 @@
                 <ul>
                     {{#foreach:items}}
                         <li>
-                        <a data-bind='page-href:{path:"/start/offer", params:{id:_id}}'>{{$data.title}}</a>
+                        <a data-bind='page-href:{path:"/start/sbv", params:{id:_id}}'>{{$data.title}}</a>
                             <input type='button' click={{$parent.delete($data)}} value="delete">
                         </li>
                     {{/foreach}}
